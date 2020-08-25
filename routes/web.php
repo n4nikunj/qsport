@@ -87,6 +87,11 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 		Route::get('settings/gems', 'GemsConfigController@index')->name('gems_config.index');
 		Route::post('gems/update', 'GemsConfigController@update')->name('gems_config.update');
 		Route::delete('settings/gems/delete/{id}', 'GemsConfigController@destroy')->name('gems_config.destroy');
+		
+		//Tournament
+		Route::resource('tournaments','TournamentsController');
+		Route::post('/tournaments/ajax', 'TournamentsController@index_ajax')->name('ajax_customers');
+		Route::post('/tournaments/status', 'TournamentsController@status')->name('status');
     });
 });
 	
