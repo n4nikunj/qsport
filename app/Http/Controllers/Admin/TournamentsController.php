@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\TrainingSheet;
+use App\Models\Tournament;
 use App\Models\Country;
 use App\Models\Helpers\GeneralConfigurationHelpers;
 
@@ -27,10 +27,11 @@ class TournamentsController extends Controller
      */
     public function index()
     {
-        $page_title = trans('training_sheets.plural');
-        $training_sheets = TrainingSheet::all();
-        // print_r($product);die;
-        return view('admin.training_sheets.index',compact('training_sheets', 'page_title'));
+        $page_title = trans('tournament.plural');
+        $tournament = Tournament::with('countries')->get();
+		
+        		print_r($tournament);die;
+        return view('admin.tournament.index',compact('tournament', 'page_title'));
     }
 
     /**
