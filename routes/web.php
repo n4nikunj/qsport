@@ -64,7 +64,10 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 
 		//training sheets
 		Route::resource('training_sheets','TrainingSheetController');
-
+		
+		//Tournament
+		Route::resource('tournaments','TournamentsController');
+		
 		//training online
 		Route::resource('training_online','TrainingOnlineController');
 		//games
@@ -88,10 +91,6 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 		Route::post('gems/update', 'GemsConfigController@update')->name('gems_config.update');
 		Route::delete('settings/gems/delete/{id}', 'GemsConfigController@destroy')->name('gems_config.destroy');
 		
-		//Tournament
-		Route::resource('tournaments','TournamentsController');
-		Route::post('/tournaments/ajax', 'TournamentsController@index_ajax')->name('ajax_customers');
-		Route::post('/tournaments/status', 'TournamentsController@status')->name('status');
     });
 });
 	

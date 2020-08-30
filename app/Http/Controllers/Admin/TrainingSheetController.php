@@ -29,7 +29,7 @@ class TrainingSheetController extends Controller
     {
         $page_title = trans('training_sheets.plural');
         $training_sheets = TrainingSheet::all();
-        // print_r($product);die;
+       //  print_r($training_sheets);die;
         return view('admin.training_sheets.index',compact('training_sheets', 'page_title'));
     }
 

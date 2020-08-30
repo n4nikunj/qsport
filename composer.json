@@ -11,14 +11,15 @@
         "php": "^7.2",
         "astrotomic/laravel-translatable": "^11.7",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "^6.2",
+        "laravel/framework": "^6.18.35",
 		"laravel/passport":"^4.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.2",
         "laravelcollective/html": "^6.0",
         "paragonie/random_compat": "~2.0",
         "spatie/laravel-medialibrary": "^7.18",
-        "spatie/laravel-permission": "^3.8"
+        "spatie/laravel-permission": "^3.8",
+		"stidges/laravel-country-flags": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
