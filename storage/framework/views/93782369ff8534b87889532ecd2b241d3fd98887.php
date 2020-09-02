@@ -38,6 +38,24 @@
                 <tr>
                   <th><?php echo e(trans('common.id')); ?></th>
                   <th><?php echo e(trans('tournament.title')); ?></th>
+                  <th><?php echo e(trans('tournament.venue')); ?></th>
+                  <th><?php echo e(trans('tournament.hotel_name')); ?></th>
+                  <th><?php echo e(trans('tournament.country')); ?></th>
+                  <th><?php echo e(trans('tournament.email')); ?></th>
+                  <th><?php echo e(trans('common.phonenumber')); ?></th>
+                  <th><?php echo e(trans('common.start_date')); ?></th>
+				  <th><?php echo e(trans('common.status')); ?></th>
+				  <th><?php echo e(trans('common.action')); ?></th>
+                </tr>
+              </thead>
+              <tbody> 
+
+              </tbody>
+              <tfoot>
+               <tr>
+                 <tr>
+                   <th><?php echo e(trans('common.id')); ?></th>
+                  <th><?php echo e(trans('tournament.title')); ?></th>
                   <!-- <th><?php echo e(trans('training_sheets.drill_instructions')); ?></th> -->
                   <th><?php echo e(trans('tournament.venue')); ?></th>
                   <th><?php echo e(trans('tournament.hotel_name')); ?></th>
@@ -45,55 +63,8 @@
                   <th><?php echo e(trans('tournament.email')); ?></th>
                   <th><?php echo e(trans('common.phonenumber')); ?></th>
                   <th><?php echo e(trans('common.start_date')); ?></th>
+				  <th><?php echo e(trans('common.status')); ?></th>
 				  <th><?php echo e(trans('common.action')); ?></th>
-                </tr>
-              </thead>
-              <tbody> 
-
-                <?php $__currentLoopData = $tournament; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $to): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-				
-                  <tr>
-                    <td><?php echo e($to->id); ?></td>
-                    <td><?php echo e($to->title); ?></td>
-                   
-                    <td><?php echo e($to->venue); ?></td>
-                    <td><?php echo e($to->hotel_name); ?></td>
-                    <td><?php echo e($to->countries['country_name']); ?> </td> 
-                    <td><?php echo e($to->email); ?> </td> 
-                    <td><?php echo e($to->country_code); ?> <?php echo e($to->phone_number); ?> </td> 
-                    <td><?php echo e($to->start_date); ?> </td> 
-                    
-                    <td>
-                      <a class="btn" href="<?php echo e(route('tournaments.edit',$to->id)); ?>">
-                        <i class="fa fa-edit"></i>
-                      </a>
-                      <a class="btn" href="<?php echo e(route('tournaments.show',$to->id)); ?>">
-                        <i class="fa fa-eye"></i>
-                      </a>
-                      <form action="<?php echo e(route('tournaments.destroy',$to->id)); ?>" method="post">
-                        <button class="btn" type="submit" onclick=" return delete_alert()">
-                          <i class="fa fa-trash"></i>
-                        </button>
-                        <?php echo method_field("delete"); ?>
-                        <?php echo csrf_field(); ?>
-                      </form>
-                    </td> 
-
-                  </tr>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
-              </tbody>
-              <tfoot>
-               <tr>
-                 <tr>
-                  <th><?php echo e(trans('common.id')); ?></th>
-                  <th><?php echo e(trans('training_sheets.title')); ?></th>
-                  <!-- <th><?php echo e(trans('training_sheets.drill_instructions')); ?></th> -->
-                  <th><?php echo e(trans('training_sheets.type')); ?></th>
-                  <th><?php echo e(trans('training_sheets.formula')); ?></th>
-                  <th><?php echo e(trans('training_sheets.price')); ?></th>
-                  <th><?php echo e(trans('training_sheets.image')); ?></th>
-                  <th><?php echo e(trans('training_sheets.video')); ?></th>
-                  <th><?php echo e(trans('common.action')); ?></th>
                 </tr>
               </tfoot>
             </table>
@@ -104,23 +75,87 @@
   </section>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
+
 <script type="text/javascript">
-  $('#tournament').DataTable({
-                'paging'      : true,
-                'lengthChange': true,
-                'searching'   : true,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : true
-              })
-  function delete_alert() {
-      if(confirm("Are you sure want to delete this item?")){
-        return true;
-      }else{
-        return false;
-      }
-  }
-  $('.alert-success').delay(5000).fadeOut();
+    $(document).on('change','.status',function(){
+        var status = $(this).val();
+        var id = $(this).attr('id');
+        var delay = 500;
+        var element = $(this);
+        $.ajax({
+            type:'post',
+            url: "<?php echo e(route('tournaments_status')); ?>",
+            data: {
+                    "status": status, 
+                    "id" : id,  
+                    "_token": "<?php echo e(csrf_token()); ?>"
+                  },
+            beforeSend: function () {
+                element.next('.loading').css('visibility', 'visible');
+            },
+            success: function (data) {
+              setTimeout(function() {
+                    element.next('.loading').css('visibility', 'hidden');
+                }, delay);
+              toastr.success(data.success);
+            },
+            error: function () {
+              toastr.error(data.error);
+            }
+        })
+    })
+  </script>
+ <script type="text/javascript">
+  $(document).ready(function(){
+	  var statuslist=["Announced","Running","Elapsed","Cancelled"];
+   $('#tournament').DataTable({
+      processing: true,
+      serverSide: true,
+      serverMethod:'POST',
+      language: {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
+      ajax: {
+          url: "<?php echo e(route('ajax_tournament')); ?>",
+          data: {"_token": "<?php echo e(csrf_token()); ?>"},
+      },
+      columns: [
+         { data: 'id' },
+         { data: 'title' },
+         { data: 'venue' },
+         { data: 'hotel_name' },
+         { data: 'country_name' },
+         { data: 'email' },
+         { data: 'phone_number' },
+         { data: 'start_date' },
+         { data: 'status',
+           mRender : function(d,t,r){
+				var $select = $("<select></select>", {
+					"id": r["id"],
+					"value": d,
+					"class":"status"
+				});
+				$.each(statuslist, function(k,v){
+					var $option = $("<option></option>", {
+						"text": v,
+						"value": v
+					});
+					if(d === v){
+						$option.attr("selected", "selected")
+					}
+					$select.append($option);
+				});
+				
+				return $select.prop("outerHTML")+'<span class="loading" style="visibility: hidden;"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i><span class="sr-only">Loading...</span></span>';
+			}
+          },
+          { 
+            mRender : function(data, type, row) {
+                  return '<form action="'+row["show"]+'" method="get"><button class="btn" type="submit"><i class="fa fa-eye"></i></button></form><form action="'+row["edit"]+'" method="get"><button class="btn" type="submit"><i class="fa fa-edit"></i></button></form><form action="'+row["delete"]+'" method="post"><button class="btn" type="submit" onclick=" return delete_alert()"><i class="fa fa-trash"></i></button><?php echo method_field("delete"); ?><?php echo csrf_field(); ?></form>';
+              } 
+          },
+        ]
+   });
+  });
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\qsport\resources\views/admin/tournament/index.blade.php ENDPATH**/ ?>

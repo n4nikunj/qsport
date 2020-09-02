@@ -67,6 +67,8 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 		
 		//Tournament
 		Route::resource('tournaments','TournamentsController');
+		Route::post('/tournaments/ajax', 'TournamentsController@index_ajax')->name('ajax_tournament');
+		Route::post('/tournaments/status', 'TournamentsController@status')->name('tournaments_status');
 		
 		//training online
 		Route::resource('training_online','TrainingOnlineController');
