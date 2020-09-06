@@ -147,11 +147,19 @@ $routename = Route::currentRouteName();
           </a>
         </li>
         @endcan
-		 <!-- country_list -->
+		 <!-- tournament_list -->
         @can('tournament-list')
         <li class="{{ (request()->is('admin/tournaments')) ? 'active' : '' }}">
           <a href="{{route('tournaments.index')}}">
             <i class="fa fa fa-map"></i> <span>{{trans('admin.tournament')}}</span>
+          </a>
+        </li>
+        @endcan  
+		 <!-- sponsors_list -->
+        @can('sponsors-list')
+        <li class="{{ (request()->is('admin/sponsors')) ? 'active' : '' }}">
+          <a href="{{route('sponsors.index')}}">
+            <i class="fa fa fa-map"></i> <span>{{trans('admin.sponsors')}}</span>
           </a>
         </li>
         @endcan  

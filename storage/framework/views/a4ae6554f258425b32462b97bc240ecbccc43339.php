@@ -153,11 +153,19 @@ $routename = Route::currentRouteName();
           </a>
         </li>
         <?php endif; ?>
-		 <!-- country_list -->
+		 <!-- tournament_list -->
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('tournament-list')): ?>
         <li class="<?php echo e((request()->is('admin/tournaments')) ? 'active' : ''); ?>">
           <a href="<?php echo e(route('tournaments.index')); ?>">
             <i class="fa fa fa-map"></i> <span><?php echo e(trans('admin.tournament')); ?></span>
+          </a>
+        </li>
+        <?php endif; ?>  
+		 <!-- sponsors_list -->
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('sponsors-list')): ?>
+        <li class="<?php echo e((request()->is('admin/sponsors')) ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('sponsors.index')); ?>">
+            <i class="fa fa fa-map"></i> <span><?php echo e(trans('admin.sponsors')); ?></span>
           </a>
         </li>
         <?php endif; ?>  

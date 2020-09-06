@@ -25,6 +25,7 @@ return [
     'show' => 'Show Game',
 
     //messages
+    'empty' => 'No Record',
     'added' => 'Game Added Successfully',
     'updated' => 'Game Updated Successfully',
     'deleted' => 'Game Deleted Successfully',

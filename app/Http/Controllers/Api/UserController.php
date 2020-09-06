@@ -1,63 +1,122 @@
 <?php
 namespace App\Http\Controllers\Api;
-use Illuminate\Http\Request; 
+
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; 
-use App\Models\User; 
-use Illuminate\Support\Facades\Auth; 
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Notifications\SignupActivate;
+use Illuminate\Support\Str;
+
 class UserController extends Controller 
 {
-public $successStatus = 200;
-/** 
-     * login api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
-    public function login(){ 
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
-            $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')-> accessToken; 
-            return response()->json(['success' => $success], $this-> successStatus); 
-        } 
-        else{ 
-            return response()->json(['error'=>'Unauthorised'], 401); 
-        } 
-    }
-/** 
-     * Register api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
-    public function register(Request $request) 
-    { 
-        $validator = Validator::make($request->all(), [ 
-            'name' => 'required', 
-            'email' => 'required|email', 
-            'password' => 'required', 
-            'c_password' => 'required|same:password',
+	/**
+     * Create user
+     *
+     * @param  [string] name
+     * @param  [string] email
+     * @param  [string] password
+     * @param  [string] c_password
+     * @return [string] phone_number
+     */
+    public function signup(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|confirmed',
 			'phone_number'=> 'required',
         ]);
-if ($validator->fails()) { 
-            return response()->json(['error'=>$validator->errors()], 401);            
-        }
-		$input = $request->all(); 
-		$input['password'] = bcrypt($input['password']); 
-        $user = User::create($input); 
-        $success['token'] =  $user->createToken('MyApp')-> accessToken; 
-        $success['name'] =  $user->name;
-return response()->json(['success'=>$success], $this-> successStatus); 
+		
+		
+        $user = new User([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+			'phone_number'=>$request->phone_number,
+			'activation_token' => Str::random(60)
+        ]);
+        $user->save();
+		$user->notify(new SignupActivate($user));
+        return response()->json([
+            'message' => 'Successfully created user!'
+        ], 201);
     }
-/** 
-     * details api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
-    public function details() 
-    { 
-        $user = Auth::user(); 
-        return response()->json(['success' => $user], $this-> successStatus); 
-    } 
-	public function listdata(){
-		return User::all();
-	}
+	public function signupActivate($token)
+	{
+		$user = User::where('activation_token', $token)->first();
+		if (!$user) {
+			return response()->json([
+				'message' => 'This activation token is invalid.'
+			], 404);
+		}
+		$user->active = true;
+		$user->activation_token = '';
+		$user->save();
+		
+		return $user;
+	}	
+    /**
+     * Login user and create token
+     *
+     * @param  [string] email
+     * @param  [string] password
+     * @param  [boolean] remember_me
+     * @return [string] access_token
+     * @return [string] token_type
+     * @return [string] expires_at
+     */
+    public function login(Request $request)
+    {
+		$request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+            'remember_me' => 'boolean'
+        ]);
+		
+        $credentials = request(['email', 'password']);
+		$credentials['active'] = 1;
+		$credentials['deleted_at'] = null;
+        if(!Auth::attempt($credentials))
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
+        $user = $request->user();
+		$tokenResult = $user->createToken('Personal Access Token');
+        $token = $tokenResult->token;
+        if ($request->remember_me)
+            $token->expires_at = Carbon::now()->addWeeks(1);
+        $token->save();
+        return response()->json([
+            'access_token' => $tokenResult->accessToken,
+            'token_type' => 'Bearer',
+            'expires_at' => Carbon::parse(
+                $tokenResult->token->expires_at
+            )->toDateTimeString()
+        ]);
+    }
+  
+    /**
+     * Logout user (Revoke the token)
+     *
+     * @return [string] message
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    }
+  
+    /**
+     * Get the authenticated User
+     *
+     * @return [json] user object
+     */
+    public function user(Request $request)
+    {
+        return response()->json($request->user());
+    }
 }

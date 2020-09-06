@@ -10,12 +10,12 @@
 <?php $__env->startSection('content'); ?>
   <section class="content-header">
     <h1>
-      <?php echo e(trans('games.heading')); ?>
+      <?php echo e(trans('sponsors.heading')); ?>
 
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?php echo e(route('home')); ?>"><i class="fa fa-dashboard"></i><?php echo e(trans('common.home')); ?></a></li>
-      <li><a href="<?php echo e(route('games.index')); ?>"> <?php echo e(trans('games.plural')); ?></a></li>
+      <li><a href="<?php echo e(route('sponsors.index')); ?>"> <?php echo e(trans('sponsors.plural')); ?></a></li>
     </ol>
   </section>
   <section class="content">
@@ -33,16 +33,18 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title"><?php echo e(trans('games.title')); ?></h3> 
-            <h3 class="box-title pull-right"><a href="<?php echo e(route('games.create')); ?>" class="btn btn-success pull-right"> <?php echo e(trans('games.add_new')); ?></a></h3>
+            <h3 class="box-title"><?php echo e(trans('sponsors.title')); ?></h3> 
+            <h3 class="box-title pull-right"><a href="<?php echo e(route('sponsors.create')); ?>" class="btn btn-success pull-right"> <?php echo e(trans('sponsors.add_new')); ?></a></h3>
           </div>
           <div class="box-body">
-            <table id="games" class="table table-bordered table-hover">
+            <table id="sponsors" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th><?php echo e(trans('common.id')); ?></th>
-                  <th><?php echo e(trans('games.name')); ?></th>
-                  <th><?php echo e(trans('games.icon')); ?></th>
+                  <th><?php echo e(trans('sponsors.logo')); ?></th>
+                  <th><?php echo e(trans('sponsors.name')); ?></th>
+                  <th><?php echo e(trans('sponsors.website')); ?></th>
+                  <th><?php echo e(trans('sponsors.sponsor_category')); ?></th>
                   <th><?php echo e(trans('common.status')); ?></th>
                   <th><?php echo e(trans('common.action')); ?></th>
                 </tr>
@@ -51,9 +53,11 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <th><?php echo e(trans('common.id')); ?></th>
-                  <th><?php echo e(trans('games.name')); ?></th>
-                  <th><?php echo e(trans('games.icon')); ?></th>
+                 <th><?php echo e(trans('common.id')); ?></th>
+                  <th><?php echo e(trans('sponsors.logo')); ?></th>
+                  <th><?php echo e(trans('sponsors.name')); ?></th>
+                  <th><?php echo e(trans('sponsors.website')); ?></th>
+                  <th><?php echo e(trans('sponsors.sponsor_category')); ?></th>
                   <th><?php echo e(trans('common.status')); ?></th>
                   <th><?php echo e(trans('common.action')); ?></th>
                 </tr>
@@ -75,7 +79,7 @@
         var element = $(this);
         $.ajax({
             type:'post',
-            url: "<?php echo e(route('game_status')); ?>",
+            url: "<?php echo e(route('sponsors_status')); ?>",
             data: {
                     "status": status, 
                     "id" : id,  
@@ -99,7 +103,7 @@
 
   <script type="text/javascript">
   $(document).ready(function(){
-   $('#games').DataTable({
+   $('#sponsors').DataTable({
       processing: true,
       serverSide: true,
       serverMethod:'POST',
@@ -107,17 +111,19 @@
       language: {
             processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
       ajax: {
-          url: "<?php echo e(route('ajax_game')); ?>",
+          url: "<?php echo e(route('ajax_sponsor')); ?>",
           data: {"_token": "<?php echo e(csrf_token()); ?>"},
       },
       columns: [
          { data: 'id' },
-         { data: 'game_name' },
-         { data: 'icon',
+         { data: 'logo' ,
             mRender : function(data, type, row) {
-              return row['icon'];
+               return '<img src="'+'asdf'+'" style="width:50px">';
             }
-         },
+		},
+         { data: 'name' },
+         { data: 'website' },
+         { data: 'sponsors_category' },
          { data: 'status',
             mRender : function(data, type, row) {
                   var status=data;
@@ -133,7 +139,7 @@
           },
           { 
             mRender : function(data, type, row) {
-                  return '<form action="'+row["edit"]+'" method="get"><button class="btn" type="submit"><i class="fa fa-edit"></i></button></form><form action="'+row["delete"]+'" method="post"><button class="btn" type="submit" onclick=" return delete_alert()"><i class="fa fa-trash"></i></button><?php echo method_field("delete"); ?><?php echo csrf_field(); ?></form>';
+                  return '<form action="'+row["show"]+'" method="get"><button class="btn" type="submit"><i class="fa fa-eye"></i></button></form><form action="'+row["delete"]+'" method="post"><button class="btn" type="submit" onclick=" return delete_alert()"><i class="fa fa-trash"></i></button><?php echo method_field("delete"); ?><?php echo csrf_field(); ?></form>';
               } 
           },
         ]
@@ -142,4 +148,4 @@
 </script>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\qsport\resources\views/admin/games/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\qsport\resources\views/admin/sponsor/index.blade.php ENDPATH**/ ?>

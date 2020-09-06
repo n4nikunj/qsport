@@ -70,6 +70,11 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 		Route::post('/tournaments/ajax', 'TournamentsController@index_ajax')->name('ajax_tournament');
 		Route::post('/tournaments/status', 'TournamentsController@status')->name('tournaments_status');
 		
+		//Sponsors
+		Route::resource('sponsors','SponsorsController');
+		Route::post('/sponsors/ajax', 'SponsorsController@index_ajax')->name('ajax_sponsor');
+		Route::post('/sponsors/status', 'SponsorsController@status')->name('sponsors_status');
+		
 		//training online
 		Route::resource('training_online','TrainingOnlineController');
 		//games
