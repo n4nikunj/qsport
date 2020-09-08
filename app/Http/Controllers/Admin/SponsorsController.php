@@ -23,7 +23,7 @@ class SponsorsController extends Controller
 	public function index_ajax(Request $request)
     {
         $request         =    $request->all();
-		//print_r($request);exit;
+		
         $draw            =    $request['draw'];
         $row             =    $request['start'];
         $rowperpage      =    $request['length']; // Rows display per page
@@ -54,12 +54,15 @@ class SponsorsController extends Controller
         $empQuery = $filter;
 		
         $empQuery = $empQuery->orderBy($columnName, $columnSortOrder)->offset($row)->limit($rowperpage)->get();
-
+		/* $d =  $query->getMedia('sponsors_logo')->first()->getUrl('thumb');
+		print_r($d);
+		exit; */
         $data = array();
         foreach ($empQuery as $emp) {
         # Set dynamic route for action buttons
-            
-           
+		
+		
+			$emp['logo'] = str_replace('http://localhost',url("/"),$emp->getMedia('sponsor_logo')->last()->getUrl('thumb'));
             $emp['show']= route("sponsors.show",$emp["id"]);
             $emp['delete'] = route("sponsors.destroy",$emp["id"]);
             
@@ -108,14 +111,14 @@ class SponsorsController extends Controller
         
         $data = $request->all();
 		$data['status']= "Active";
-        $training_online = Sponsors::create($data);
+        $sponsors = Sponsors::create($data);
         
         if(isset($data['sponsor_logo'])) {
-            $training_online->addMediaFromRequest('sponsor_logo')->toMediaCollection('sponsor_logo');
+            $sponsors->addMediaFromRequest('sponsor_logo')->toMediaCollection('sponsors');
         }
 
       
-        if($training_online) {
+        if($sponsors) {
             return redirect()->route('sponsors.index')->with('success',trans('sponsors.added'));
         } else {
             return redirect()->route('sponsors.index')->with('error',trans('common.something_went_wrong'));
@@ -132,5 +135,22 @@ class SponsorsController extends Controller
        }else{
         return response()->json(['error' => trans('sponsors.sponsor_status_update_unsucessfully')]);
        }
+    }
+	
+	  /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $Sponsors = Sponsors::find($id);
+
+        if($Sponsors->delete()){
+            return redirect()->route('sponsors.index')->with('success',trans('sponsor.deleted'));
+        }else{
+            return redirect()->route('sponsors.index')->with('error',trans('common.something_went_wrong'));
+        }
     }
 }
