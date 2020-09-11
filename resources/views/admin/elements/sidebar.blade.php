@@ -135,6 +135,14 @@ $routename = Route::currentRouteName();
             <i class="fa fa fa-map"></i> <span>{{trans('admin.countries')}}</span>
           </a>
         </li>
+        @endcan
+		<!-- Pool Hall List -->
+		@can('pool_hall-list')
+        <li class="{{ (request()->is('admin/pool_hall')) ? 'active' : '' }}">
+          <a href="{{route('pool_hall.index')}}">
+            <i class="fa fa fa-map"></i> <span>{{trans('admin.poolhall')}}</span>
+          </a>
+        </li>
         @endcan  
         <!-- enquiry -->
         @can('enquiry-list')

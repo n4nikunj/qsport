@@ -4,32 +4,35 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\TrainingSheet;
+use App\Models\PoolHall;
 use App\Models\Tournament;
 use App\Models\Country;
 use App\Models\Helpers\GeneralConfigurationHelpers;
 
-class TournamentsController extends Controller
+class PoolHallController extends Controller
 {
-    use GeneralConfigurationHelpers;
+	use GeneralConfigurationHelpers;
 
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:tournament-list', ['only' => ['index','show']]);
-        $this->middleware('permission:tournament-create', ['only' => ['create','store']]);
-        $this->middleware('permission:tournament-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:pool_hall-list', ['only' => ['index','show']]);
+        $this->middleware('permission:pool_hall-create', ['only' => ['create','store']]);
+        $this->middleware('permission:pool_hall-edit', ['only' => ['edit','update']]);
+		$this->middleware('permission:pool_hall-delete', ['only' => ['destroy']]);
     }
-
+	
     /**
-     * Display a listing.
+     * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $page_title = trans('tournament.plural');
-        $tournament = Tournament::with('countries')->get();
-        return view('admin.tournament.index',compact('tournament', 'page_title'));
+		$page_title = trans('poolhall.plural');
+        $poolhall = PoolHall::with('countries')->get();
+        return view('admin.poolhall.index',compact('poolhall', 'page_title'));
     }
 	public function index_ajax(Request $request)
     {
@@ -43,7 +46,7 @@ class TournamentsController extends Controller
         $columnSortOrder =    $request['order'][0]['dir']; // asc or desc
         $searchValue     =    $request['search']['value']; // Search value
 
-        $query = new Tournament();
+        $query = new PoolHall();
 		
         ## Total number of records without filtering
         $total = $query->count();
@@ -56,8 +59,6 @@ class TournamentsController extends Controller
                             $q->whereHas('translation',function($query) use ($searchValue){
                                     $query->where('title','like','%'.$searchValue.'%');
                                         })
-                            ->orWhere('hotel_name','like','%'.$searchValue.'%')
-                            ->orWhere('venue','like','%'.$searchValue.'%')
                             ->orWhere('id','like','%'.$searchValue.'%')
                             ->orWhere('status','like','%'.$searchValue.'%');
                      });
@@ -81,16 +82,11 @@ class TournamentsController extends Controller
 			
         # Set dynamic route for action buttons
              $emp['country_id'] = $emp["countries"]['country_name'];
-            $emp['edit']= route("tournaments.edit",$emp["id"]);
-            $emp['show']= route("tournaments.show",$emp["id"]);
-            $emp['delete'] = route("tournaments.destroy",$emp["id"]);
-            //translatedAttributes
+            $emp['edit']= route("pool_hall.edit",$emp["id"]);
+            $emp['show']= route("pool_hall.show",$emp["id"]);
+            $emp['delete'] = route("pool_hall.destroy",$emp["id"]);
           $data[]=$emp;
         }
-	// echo "<pre>";
-		// print_r($empQuery);
-		// exit;
-        ## Response
         $response = array(
           "draw" => intval($draw),
           "iTotalRecords" => $totalRecordwithFilter,
@@ -102,73 +98,90 @@ class TournamentsController extends Controller
         echo json_encode($response);
 
     }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
     /**
-     * Display the specified item.
+     * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-		
-        $page_title = trans('tournament.show');
-        $tournament = Tournament::find($id);
+        $page_title = trans('poolhall.show');
+        $poolhall = PoolHall::find($id);
         $countries = Country::where('status','active')->get();
         // echo '<pre>'; print_r($category->childs()); die;
-        return view('admin.tournament.show',compact('countries', 'tournament', 'page_title'));
+        return view('admin.poolhall.show',compact('countries', 'poolhall', 'page_title'));
     }
 
     /**
-     * Show the form for editing the specified item.
+     * Show the form for editing the specified resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-		
-        $page_title = trans('tournament.edit');
+        $page_title = trans('poolhall.edit');
         $countries = Country::where('status','active')->get();
-        $tournament = Tournament::find($id);
-        return view('admin.tournament.edit',compact('countries', 'tournament', 'page_title'));
+        $poolhall = PoolHall::find($id);
+        return view('admin.poolhall.edit',compact('countries', 'poolhall', 'page_title'));
     }
 
     /**
-     * Update the specified itm in storage.
+     * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $validator= $request->validate([
         'title:en' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
-         'description:en' => 'required',
+        'description:en' => 'required',
         'country_id' => 'required',
-        'venue' => 'required',
-        'hotel_name' => 'required',
+        'number_of_tables' => 'required',
+        'types_of_tables' => 'required',
         'email' => 'required|email',
         'phone_number' => 'required',
-        'maximum_Player' => 'required',
-        'start_date' => 'required',
-        'end_date' => 'required',
-        'entry_fee' => 'required',
-        'priceMoney' => 'required',
-        'entry_fee' => 'required',
-        'currency' => 'required'
+        'start_time' => 'required',
+        'end_time' => 'required',
+        'price' => 'required',
+        'address' => 'required',
         ]);
 
         $data = $request->all();
-        $tournament = Tournament::find($id);
-         if(isset($data['tournament_image'])) {
-            $tournament->addMediaFromRequest('tournament_image')->toMediaCollection('tournament_image');
+        $poolhall = PoolHall::find($id);
+         if(isset($data['pool_image'])) {
+            $poolhall->addMediaFromRequest('pool_image')->toMediaCollection('pool_image');
         }
 
 
-        if($tournament->update($data)){
-            return redirect()->route('tournaments.index')->with('success',trans('tournament.updated'));
+        if($poolhall->update($data)){
+            return redirect()->route('pool_hall.index')->with('success',trans('poolhall.updated'));
         } else {
-            return redirect()->route('tournaments.index')->with('error',trans('common.something_went_wrong'));
+            return redirect()->route('pool_hall.index')->with('error',trans('common.something_went_wrong'));
         }
     }
 
@@ -176,27 +189,27 @@ class TournamentsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $Tournament = Tournament::find($id);
+        $PoolHall = PoolHall::find($id);
 
-        if($Tournament->delete()){
-            return redirect()->route('tournaments.index')->with('success',trans('tournament.deleted'));
+        if($PoolHall->delete()){
+            return redirect()->route('pool_hall.index')->with('success',trans('poolhall.deleted'));
         }else{
-            return redirect()->route('tournaments.index')->with('error',trans('common.something_went_wrong'));
+            return redirect()->route('pool_hall.index')->with('error',trans('common.something_went_wrong'));
         }
     }
 	public function status(Request $request)
     {
-        $Tournament= Tournament::where('id',$request->id)
+        $PoolHall= PoolHall::where('id',$request->id)
                ->update(['status'=>$request->status]);
     
-       if($Tournament){
-        return response()->json(['success' => trans('tournament.tournament_status_update_sucessfully')]);
+       if($PoolHall){
+        return response()->json(['success' => trans('poolhall.pool_hall_status_update_sucessfully')]);
        }else{
-        return response()->json(['error' => trans('tournament.tournament_status_update_unsucessfully')]);
+        return response()->json(['error' => trans('poolhall.pool_hall_status_update_unsucessfully')]);
        }
     }
 }

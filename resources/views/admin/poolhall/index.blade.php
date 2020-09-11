@@ -11,11 +11,11 @@
 @section('content')
   <section class="content-header">
     <h1>
-      {{trans('tournament.heading')}}
+      {{trans('poolhall.heading')}}
     </h1>
     <ol class="breadcrumb">
       <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i>{{ trans('common.home') }}</a></li>
-      <li><a href="{{route('tournaments.index')}}"> {{trans('tournament.plural')}}</a></li>
+      <li><a href="{{route('tournaments.index')}}"> {{trans('poolhall.plural')}}</a></li>
     </ol>
   </section>
 
@@ -29,22 +29,19 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">{{trans('tournament.titleh')}}</h3> 
+            <h3 class="box-title">{{trans('poolhall.titleh')}}</h3> 
 
           </div>
           <div class="box-body">
-            <table id="tournament" class="table table-bordered table-hover">
+            <table id="poolhall" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th>{{trans('common.id')}}</th>
-                  <th>{{trans('tournament.title')}}</th>
-                  <th>{{trans('tournament.venue')}}</th>
-                  <th>{{trans('tournament.hotel_name')}}</th>
-                  <th>{{trans('tournament.country')}}</th>
-                  <th>{{trans('tournament.email')}}</th>
-                  <th>{{trans('tournament.phonenumber')}}</th>
-                  <th>{{trans('tournament.start_date')}}</th>
-				  <th>{{trans('tournament.status')}}</th>
+                  <th>{{trans('poolhall.title')}}</th>
+                  <th>{{trans('poolhall.country')}}</th>
+                  <th>{{trans('poolhall.email')}}</th>
+                  <th>{{trans('poolhall.phonenumber')}}</th>
+				  <th>{{trans('poolhall.status')}}</th>
 				  <th>{{trans('common.action')}}</th>
                 </tr>
               </thead>
@@ -52,18 +49,13 @@
 
               </tbody>
               <tfoot>
-               <tr>
-                 <tr>
-                   <th>{{trans('common.id')}}</th>
-                  <th>{{trans('tournament.title')}}</th>
-                  <!-- <th>{{trans('training_sheets.drill_instructions')}}</th> -->
-                  <th>{{trans('tournament.venue')}}</th>
-                  <th>{{trans('tournament.hotel_name')}}</th>
-                  <th>{{trans('tournament.country')}}</th>
-                  <th>{{trans('tournament.email')}}</th>
-                  <th>{{trans('tournament.phonenumber')}}</th>
-                  <th>{{trans('tournament.start_date')}}</th>
-				  <th>{{trans('tournament.status')}}</th>
+				<tr>
+                  <th>{{trans('common.id')}}</th>
+                  <th>{{trans('poolhall.title')}}</th>
+                  <th>{{trans('poolhall.country')}}</th>
+                  <th>{{trans('poolhall.email')}}</th>
+                  <th>{{trans('poolhall.phonenumber')}}</th>
+				  <th>{{trans('poolhall.status')}}</th>
 				  <th>{{trans('common.action')}}</th>
                 </tr>
               </tfoot>
@@ -84,7 +76,7 @@
         var element = $(this);
         $.ajax({
             type:'post',
-            url: "{{route('tournaments_status')}}",
+            url: "{{route('pool_hall_status')}}",
             data: {
                     "status": status, 
                     "id" : id,  
@@ -107,27 +99,24 @@
   </script>
  <script type="text/javascript">
   $(document).ready(function(){
-	  var statuslist=["Announced","Running","Elapsed","Cancelled"];
-   $('#tournament').DataTable({
+	  var statuslist=["Active","Inactive"];
+   $('#poolhall').DataTable({
       processing: true,
       serverSide: true,
       serverMethod:'POST',      
 	  language: {
             processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
       ajax: {
-          url: "{{route('ajax_tournament')}}",
+          url: "{{route('ajax_pool_hall')}}",
           data: {"_token": "{{csrf_token()}}"},
       },
 	  
       columns: [
          { data: 'id' },
          { data: 'title' },
-         { data: 'venue' },
-         { data: 'hotel_name' },
          { data: 'country_id' },
          { data: 'email' },
          { data: 'phone_number' },
-         { data: 'start_date' },
          { data: 'status',
            mRender : function(d,t,r){
 				var $select = $("<select></select>", {
