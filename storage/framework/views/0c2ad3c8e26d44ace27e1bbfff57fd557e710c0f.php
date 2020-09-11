@@ -103,6 +103,7 @@
 
   <script type="text/javascript">
   $(document).ready(function(){
+	
    $('#sponsors').DataTable({
       processing: true,
       serverSide: true,
@@ -118,7 +119,8 @@
          { data: 'id' },
          { data: 'logo' ,
             mRender : function(data, type, row) {
-               return '<img src="'+'asdf'+'" style="width:50px">';
+				  
+               return '<img src="'+data+'" style="width:50px">';
             }
 		},
          { data: 'name' },
@@ -126,8 +128,9 @@
          { data: 'sponsors_category' },
          { data: 'status',
             mRender : function(data, type, row) {
+				
                   var status=data;
-                  if(status=='active'){   
+                  if(status=='Active'){   
                     type="selected";
                     data='';
                   }else{
@@ -142,7 +145,11 @@
                   return '<form action="'+row["show"]+'" method="get"><button class="btn" type="submit"><i class="fa fa-eye"></i></button></form><form action="'+row["delete"]+'" method="post"><button class="btn" type="submit" onclick=" return delete_alert()"><i class="fa fa-trash"></i></button><?php echo method_field("delete"); ?><?php echo csrf_field(); ?></form>';
               } 
           },
-        ]
+        ],
+		'columnDefs': [ {
+        'targets': [1,6], /* column index */
+        'orderable': false, /* true or false */
+     }]
    });
   });
 </script>
