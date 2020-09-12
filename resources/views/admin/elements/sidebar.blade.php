@@ -147,6 +147,14 @@ $routename = Route::currentRouteName();
           </a>
         </li>
         @endcan
+		 <!-- tutor_list -->
+        @can('tutor-list')
+        <li class="{{ (request()->is('admin/tutors')) ? 'active' : '' }}">
+          <a href="{{route('tutors.index')}}">
+            <i class="fa fa fa-map"></i> <span>{{trans('admin.tutor')}}</span>
+          </a>
+        </li>
+        @endcan  
 		 <!-- tournament_list -->
         @can('tournament-list')
         <li class="{{ (request()->is('admin/tournaments')) ? 'active' : '' }}">

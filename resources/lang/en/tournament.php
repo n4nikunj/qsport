@@ -28,6 +28,7 @@ return [
 	'select_currency'=> 'Select Currency',
 
     //messages
+	'empty' => 'No Record',
     'added' => 'Tournament Added Successfully',
     'updated' => 'Tournament Updated Successfully',
     'deleted' => 'Tournament Deleted Successfully',

@@ -75,6 +75,12 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 		Route::post('/sponsors/ajax', 'SponsorsController@index_ajax')->name('ajax_sponsor');
 		Route::post('/sponsors/status', 'SponsorsController@status')->name('sponsors_status');
 		
+		//tutor
+		Route::resource('tutors','TutorsController');
+		Route::post('/tutors/ajax', 'TutorsController@index_ajax')->name('ajax_tutor');
+		Route::post('/tutors/status', 'TutorsController@status')->name('tutor_status');
+		Route::post('/tutors/prostatus', 'TutorsController@prostatus')->name('tutor_profile_status');
+		
 		//training online
 		Route::resource('training_online','TrainingOnlineController');
 		//games

@@ -45,4 +45,6 @@ return [
     'quiz_questions' => 'Quiz Questions',
 	
 	'tournament' => 'Tournament',
+	'sponsors' => 'Sponsors',
+	'tutor' => 'Tutors',
 ];

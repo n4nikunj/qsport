@@ -46,11 +46,12 @@ Route::group([
         Route::get('list', 'SportsController@list');
         Route::get('user', 'UserController@user');
     });
-
-/* Route::post('login', 'Api\UserController@login');
-Route::post('register', 'API\UserController@register');
-Route::get('list', 'Api\UserController@listdata');
-
-Route::group(['middleware' => 'auth:api'], function(){
-Route::post('details', 'API\UserController@details');
-}); */
+//################# Tournament API #########################
+ Route::group([
+      'middleware' => 'auth:api',
+	  'prefix' => 'tournament','namespace' => 'Api'
+    ], function() {
+        Route::post('create', 'TournamentController@create');
+        Route::get('list', 'TournamentController@list');
+        Route::post('detail', 'TournamentController@detail');
+    });

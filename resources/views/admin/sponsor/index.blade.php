@@ -119,8 +119,7 @@
          { data: 'id' },
          { data: 'logo' ,
             mRender : function(data, type, row) {
-				  
-               return '<img src="'+data+'" style="width:50px">';
+               return '<a href="'+row['website']+'"><img src="'+data+'" style="width:50px"></a>';
             }
 		},
          { data: 'name' },

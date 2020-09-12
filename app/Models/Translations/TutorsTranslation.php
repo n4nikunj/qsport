@@ -4,14 +4,14 @@ namespace App\Models\Translations;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TournamentTranslation extends Model
+class TutorsTranslation extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'tournament_translations';
+    protected $table = 'tutors_translations';
 
     /**
      * Indicates if the model should be timestamped.
