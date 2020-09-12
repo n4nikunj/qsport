@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Country;
 use Astrotomic\Translatable\Translatable;
-use App\Models\Translations\TournamentTranslation;
-class Tournament extends Model
+use App\Models\Translations\PoolHallTranslation;
+
+class PoolHall extends Model
 {
 	use  Translatable;
-    protected $table = 'tournament';
+    protected $table = 'pool_hall';
 	 /**
      * The relations to eager load on every query.
      *
      * @var array
      */
-    protected $with = ['translations'];
+    protected $with = ['translations','countries'];
 	
-    protected $fillable = ['country_id', 'venue', 'hotel_name','email','country_code','phone_number','maximum_Player','start_date','end_date','entry_fee','priceMoney','status','watch_live'];
+    protected $fillable = ['pool_image','title','email','phone_number','description','country_id','address','social_media_link','number_of_tables','types_of_tables','price','start_time','end_time','status'];
 	/**
      * @var string
      */
@@ -31,20 +32,15 @@ class Tournament extends Model
     /**
      * @var string
      */
-    public $translationForeignKey = 'tournament_id';
-
-   
-
+    public $translationForeignKey = 'pool_hall_id';
     /**
      * The class name for the localed model.
      *
      * @var string
      */
 	 
-    public $translationModel = TournamentTranslation::class;
+    public $translationModel = PoolHallTranslation::class;
 
-	
-	
 	public function countries()
     {
          return $this->hasOne(Country::class,'id','country_id');

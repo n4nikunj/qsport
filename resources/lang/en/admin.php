@@ -43,8 +43,8 @@ return [
     'list_quiz' => 'List Quiz',
     'add_quiz' => 'Add Quiz',
     'quiz_questions' => 'Quiz Questions',
-	
 	'tournament' => 'Tournament',
 	'sponsors' => 'Sponsors',
 	'tutor' => 'Tutors',
+	'poolhall' => 'Pool Hall',
 ];
