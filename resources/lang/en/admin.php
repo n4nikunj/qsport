@@ -45,6 +45,7 @@ return [
     'quiz_questions' => 'Quiz Questions',
 	
 	'tournament' => 'Tournament',
-	
 	'poolhall' => 'Pool Hall',
+	'sponsors' => 'Sponsors',
+	'watchlive' => 'Watch Live',
 ];

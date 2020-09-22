@@ -81,7 +81,8 @@ class PoolHallController extends Controller
         foreach ($empQuery as $emp) {
 			
         # Set dynamic route for action buttons
-             $emp['country_id'] = $emp["countries"]['country_name'];
+            $emp['country_id'] = $emp["countries"]['country_name'];
+			$emp['created_by'] = $emp["users"]['name'];
             $emp['edit']= route("pool_hall.edit",$emp["id"]);
             $emp['show']= route("pool_hall.show",$emp["id"]);
             $emp['delete'] = route("pool_hall.destroy",$emp["id"]);
@@ -105,7 +106,9 @@ class PoolHallController extends Controller
      */
     public function create()
     {
-        //
+        $page_title = trans('poolhall.add_new');
+        $countries = Country::where('status','active')->get();
+        return view('admin.poolhall.create', compact('page_title', 'countries'));
     }
 
     /**
@@ -116,7 +119,34 @@ class PoolHallController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		
+        $validator= $request->validate([
+        'title:en' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
+        'description:en' => 'required',
+		'address:en' => 'required',
+        'country_id' => 'required',
+        'number_of_tables' => 'required',
+        'types_of_tables' => 'required',
+        'email' => 'required|email',
+        'phone_number' => 'required',
+		'social_media_link' => 'required',
+        'start_time' => 'required',
+        'end_time' => 'required',
+        'price' => 'required'
+        ]);
+
+        $data = $request->all();
+		$poolhall = PoolHall::create($data);
+        
+        if(isset($data['pool_image'])) {
+            //$poolhall->addMediaFromRequest('pool_image')->toMediaCollection('pool_image');
+        }
+
+		if($poolhall) {
+            return redirect()->route('pool_hall.index')->with('success',trans('poolhall.added'));
+        } else {
+            return redirect()->route('pool_hall.index')->with('error',trans('common.something_went_wrong'));
+        }
     }
 
     /**
@@ -129,6 +159,7 @@ class PoolHallController extends Controller
     {
         $page_title = trans('poolhall.show');
         $poolhall = PoolHall::find($id);
+		
         $countries = Country::where('status','active')->get();
         // echo '<pre>'; print_r($category->childs()); die;
         return view('admin.poolhall.show',compact('countries', 'poolhall', 'page_title'));
@@ -160,17 +191,18 @@ class PoolHallController extends Controller
         $validator= $request->validate([
         'title:en' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
         'description:en' => 'required',
+		'address:en' => 'required',
         'country_id' => 'required',
         'number_of_tables' => 'required',
         'types_of_tables' => 'required',
         'email' => 'required|email',
         'phone_number' => 'required',
+		'social_media_link' => 'required',
         'start_time' => 'required',
         'end_time' => 'required',
-        'price' => 'required',
-        'address' => 'required',
+        'price' => 'required'
         ]);
-
+		
         $data = $request->all();
         $poolhall = PoolHall::find($id);
          if(isset($data['pool_image'])) {

@@ -28,10 +28,11 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="box">
-          <div class="box-header">
+		  <div class="box-header">
             <h3 class="box-title"><?php echo e(trans('poolhall.titleh')); ?></h3> 
-
+            <h3 class="box-title pull-right"><a href="<?php echo e(route('pool_hall.create')); ?>" class="btn btn-success pull-right"> <?php echo e(trans('poolhall.add_new')); ?></a></h3>
           </div>
+         
           <div class="box-body">
             <table id="poolhall" class="table table-bordered table-hover">
               <thead>
@@ -40,7 +41,8 @@
                   <th><?php echo e(trans('poolhall.title')); ?></th>
                   <th><?php echo e(trans('poolhall.country')); ?></th>
                   <th><?php echo e(trans('poolhall.email')); ?></th>
-                  <th><?php echo e(trans('poolhall.phonenumber')); ?></th>
+                  <th><?php echo e(trans('poolhall.createdBy')); ?></th>
+				  <th><?php echo e(trans('poolhall.createdOn')); ?></th>
 				  <th><?php echo e(trans('poolhall.status')); ?></th>
 				  <th><?php echo e(trans('common.action')); ?></th>
                 </tr>
@@ -54,7 +56,8 @@
                   <th><?php echo e(trans('poolhall.title')); ?></th>
                   <th><?php echo e(trans('poolhall.country')); ?></th>
                   <th><?php echo e(trans('poolhall.email')); ?></th>
-                  <th><?php echo e(trans('poolhall.phonenumber')); ?></th>
+                  <th><?php echo e(trans('poolhall.createdBy')); ?></th>
+				  <th><?php echo e(trans('poolhall.createdOn')); ?></th>
 				  <th><?php echo e(trans('poolhall.status')); ?></th>
 				  <th><?php echo e(trans('common.action')); ?></th>
                 </tr>
@@ -116,7 +119,8 @@
          { data: 'title' },
          { data: 'country_id' },
          { data: 'email' },
-         { data: 'phone_number' },
+         { data: 'created_by' },
+		 { data: 'created_at' },
          { data: 'status',
            mRender : function(d,t,r){
 				var $select = $("<select></select>", {

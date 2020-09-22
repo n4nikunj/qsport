@@ -11,11 +11,11 @@
 @section('content')
   <section class="content-header">
     <h1>
-      {{trans('poolhall.heading')}}
+      {{trans('watchlive.heading')}}
     </h1>
     <ol class="breadcrumb">
       <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i>{{ trans('common.home') }}</a></li>
-      <li><a href="{{route('tournaments.index')}}"> {{trans('poolhall.plural')}}</a></li>
+      <li><a href="{{route('tournaments.index')}}"> {{trans('watchlive.plural')}}</a></li>
     </ol>
   </section>
 
@@ -29,21 +29,21 @@
       <div class="col-xs-12">
         <div class="box">
 		  <div class="box-header">
-            <h3 class="box-title">{{trans('poolhall.titleh')}}</h3> 
-            <h3 class="box-title pull-right"><a href="{{route('pool_hall.create')}}" class="btn btn-success pull-right"> {{trans('poolhall.add_new')}}</a></h3>
+            <h3 class="box-title">{{trans('watchlive.titleh')}}</h3> 
+            <h3 class="box-title pull-right"><a href="{{route('watch_live.create')}}" class="btn btn-success pull-right"> {{trans('watchlive.add_new')}}</a></h3>
           </div>
          
           <div class="box-body">
-            <table id="poolhall" class="table table-bordered table-hover">
+            <table id="watchlive" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th>{{trans('common.id')}}</th>
-                  <th>{{trans('poolhall.title')}}</th>
-                  <th>{{trans('poolhall.country')}}</th>
-                  <th>{{trans('poolhall.email')}}</th>
-                  <th>{{trans('poolhall.createdBy')}}</th>
-				  <th>{{trans('poolhall.createdOn')}}</th>
-				  <th>{{trans('poolhall.status')}}</th>
+                  <th>{{trans('watchlive.match_name')}}</th>
+                  <th>{{trans('watchlive.start_date')}}</th>
+                  <th>{{trans('watchlive.end_date')}}</th>
+                  <th>{{trans('watchlive.price')}}</th>
+				  <th>{{trans('watchlive.currency')}}</th>
+				  <th>{{trans('watchlive.status')}}</th>
 				  <th>{{trans('common.action')}}</th>
                 </tr>
               </thead>
@@ -53,12 +53,12 @@
               <tfoot>
 				<tr>
                   <th>{{trans('common.id')}}</th>
-                  <th>{{trans('poolhall.title')}}</th>
-                  <th>{{trans('poolhall.country')}}</th>
-                  <th>{{trans('poolhall.email')}}</th>
-                  <th>{{trans('poolhall.createdBy')}}</th>
-				  <th>{{trans('poolhall.createdOn')}}</th>
-				  <th>{{trans('poolhall.status')}}</th>
+                  <th>{{trans('watchlive.match_name')}}</th>
+                  <th>{{trans('watchlive.start_date')}}</th>
+                  <th>{{trans('watchlive.end_date')}}</th>
+                  <th>{{trans('watchlive.price')}}</th>
+				  <th>{{trans('watchlive.currency')}}</th>
+				  <th>{{trans('watchlive.status')}}</th>
 				  <th>{{trans('common.action')}}</th>
                 </tr>
               </tfoot>
@@ -79,7 +79,7 @@
         var element = $(this);
         $.ajax({
             type:'post',
-            url: "{{route('pool_hall_status')}}",
+            url: "{{route('watch_live_status')}}",
             data: {
                     "status": status, 
                     "id" : id,  
@@ -103,24 +103,24 @@
  <script type="text/javascript">
   $(document).ready(function(){
 	  var statuslist=["Active","Inactive"];
-   $('#poolhall').DataTable({
+   $('#watchlive').DataTable({
       processing: true,
       serverSide: true,
       serverMethod:'POST',      
 	  language: {
             processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
       ajax: {
-          url: "{{route('ajax_pool_hall')}}",
+          url: "{{route('ajax_watch_live')}}",
           data: {"_token": "{{csrf_token()}}"},
       },
 	  
       columns: [
          { data: 'id' },
-         { data: 'title' },
-         { data: 'country_id' },
-         { data: 'email' },
-         { data: 'created_by' },
-		 { data: 'created_at' },
+         { data: 'match_name' },
+         { data: 'start_date' },
+         { data: 'end_date' },
+         { data: 'price' },
+		 { data: 'currency' },
          { data: 'status',
            mRender : function(d,t,r){
 				var $select = $("<select></select>", {

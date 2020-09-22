@@ -2,12 +2,12 @@
 @section('content')
   <section class="content-header">
     <h1>
-      {{trans('poolhall.edit')}}
+      {{trans('poolhall.add_new')}}
     </h1>
     <ol class="breadcrumb">
       <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> {{ trans('common.home') }}</a></li>
       <li><a href="{{route('pool_hall.index')}}">{{trans('poolhall.plural')}}</a></li>
-      <li class="active">{{trans('poolhall.edit')}}</li>
+      <li class="active">{{trans('poolhall.add_new')}}</li>
     </ol>
   </section>
   <section class="content">
@@ -33,9 +33,8 @@
               </a>
             @endcan
           </div>
-          <form method="POST" id="poolhall" action="{{route('pool_hall.update', $poolhall->id)}}" accept-charset="UTF-8" enctype="multipart/form-data">
+          <form method="POST" id="poolhall" action="{{route('pool_hall.store')}}" accept-charset="UTF-8" enctype="multipart/form-data">
             @csrf
-            <input name="_method" type="hidden" value="PUT">
             <div class="box-body">
               <div class="row">
                 <div class="col-lg-6">
@@ -53,15 +52,15 @@
 						  <div role="tabpanel" class="tab-pane @if($lk=='en') active @endif" id="abc_{{$lk}}">
 								<div class="form-group">
 									 <label for="title:{{$lk}}" class="content-label">{{trans('poolhall.title')}}</label>
-									 <input type="text" class="form-control" name="title:{{$lk}}" placeholder="{{trans('poolhall.title')}}" value="{{$poolhall->translate($lk)->title}}">
+									 <input type="text" class="form-control" name="title:{{$lk}}" placeholder="{{trans('poolhall.title')}}" value="">
 								</div>
 								<div class="form-group">
 									<label for="description:{{$lk}}" class="content-label">{{trans('poolhall.description')}}</label>
-									<textarea class="form-control" minlength="2" maxlength="255"  name="description:{{$lk}}">{{$poolhall->translate($lk)->description}}</textarea>
+									<textarea class="form-control" minlength="2" maxlength="255"  name="description:{{$lk}}"></textarea>
 								</div>
 								<div class="form-group">
 										<label for="address:{{$lk}}" class="content-label">{{trans('poolhall.address')}}</label>
-										<textarea class="form-control" minlength="2" maxlength="255"  name="address:{{$lk}}">{{$poolhall->translate($lk)->address}}</textarea>
+										<textarea class="form-control" minlength="2" maxlength="255"  name="address:{{$lk}}"></textarea>
 								</div>
 							</div>
 						@endforeach
@@ -70,19 +69,19 @@
 					
 				  <div class="form-group">
 						 <label for="price" class="content-label">{{trans('poolhall.price')}}</label>
-						  <input type="text" class="form-control" name="price" placeholder="{{trans('poolhall.price')}}" value="{{$poolhall->price}}">
+						  <input type="text" class="form-control" name="price" placeholder="{{trans('poolhall.price')}}" value="">
 				  </div>
                   <div class="row">
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="start_time" class="content-label">{{trans('poolhall.start_time')}}</label>
-                           <input type="time" name="start_time" class="form-control" value="{{$poolhall->start_time}}">
+                           <input type="time" name="start_time" class="form-control" value="">
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="end_time" class="content-label">{{trans('poolhall.end_time')}}</label>
-                          <input type="time" name="end_time" class="form-control" value="{{$poolhall->end_time}}">
+                          <input type="time" name="end_time" class="form-control" value="">
                         </div>
                      </div>
                   </div>
@@ -94,7 +93,7 @@
 					 <select name="country_id" class="form-control" >
 						<option value="">{{trans('poolhall.select_country')}}</option>
                         @foreach($countries as $country)
-                          <option value="{{$country->id}}" @if($poolhall->country_id == $country->id) selected @endif>
+                          <option value="{{$country->id}}">
                             {{$country->country_name}} 
                           </option>    
                         @endforeach
@@ -106,26 +105,27 @@
 							<div class="form-group">
 							   <label for="email" class="content-label">{{trans('poolhall.email')}}</label>
 							  
-							   <input type="text" class="form-control" name="email" placeholder="{{trans('poolhall.email')}}" value="{{$poolhall->email}}">
+							   <input type="text" class="form-control" name="email" placeholder="{{trans('poolhall.email')}}" value="">
 							</div>
 						 </div>
 						 <div class="col-lg-6">
 							<div class="form-group">
 							   <label for="phone_number" class="content-label">{{trans('poolhall.phonenumber')}}</label>
 							   <div class="row">
-								<div class="col-lg-3">
-									<select name="country_code" class="form-control" >
-										<option value="">{{trans('poolhall.select_dial_code')}}</option>
-										@foreach($countries as $country)
-										  <option value="{{$country->dial_code}}" @if($poolhall->country_code == $country->dial_code) selected @endif>
-											{{$country->dial_code}} 
-										  </option>    
-										@endforeach
-									  </select>
+									<div class="col-lg-3">
+										<select name="country_code" class="form-control" >
+											<option value="">{{trans('poolhall.select_dial_code')}}</option>
+											@foreach($countries as $country)
+											  <option value="{{$country->dial_code}}">
+												{{$country->dial_code}} 
+											  </option>    
+											@endforeach
+										  </select>
+								   </div>
+								   <div class="col-lg-9">
+										<input type="text" class="form-control col-lg-6" name="phone_number" placeholder="{{trans('poolhall.phonenumber')}}" value="">
+								   </div>
 							   </div>
-							   <div class="col-lg-9">
-									<input type="text" class="form-control col-lg-6" name="phone_number" placeholder="{{trans('poolhall.phonenumber')}}" value="{{$poolhall->phone_number}}">
-							   </div></div>
 							  
 							</div>
 						 </div>
@@ -134,8 +134,8 @@
 						 <div class="col-lg-6">
 							<div class="form-group">
 							  <label for="createdBy" class="content-label">{{trans('poolhall.createdBy')}}</label>
-							  <input type="hidden" name="created_by" value="{{$poolhall->created_by}}">
-							  <input type="text" class="form-control"  readOnly placeholder="{{trans('poolhall.createdBy')}}" value="{{$poolhall['users']->name}}">
+							  <input type="hidden" name="created_by" value="{{auth()->user()->id}}">
+							  <input type="text" class="form-control"  readOnly placeholder="{{trans('poolhall.createdBy')}}" value="{{auth()->user()->name}}">
 							</div>
 						 </div>
 						 <div class="col-lg-6">
@@ -150,19 +150,19 @@
 					</div>
 					<div class="form-group">
 						<label for="social_media_link" class="content-label">{{trans('poolhall.social_media_link')}}</label>
-						<input type="text" class="form-control" name="social_media_link" placeholder="{{trans('poolhall.social_media_link')}}" value="{{$poolhall->social_media_link}}">
+						<input type="text" class="form-control" name="social_media_link" placeholder="{{trans('poolhall.social_media_link')}}" value="">
 					</div>
 					<div class="row">
 						 <div class="col-lg-6">
 							<div class="form-group">
 							  <label for="number_of_tables" class="content-label">{{trans('poolhall.number_of_tables')}}</label>
-								<input type="number" class="form-control" name="number_of_tables" placeholder="{{trans('poolhall.number_of_tables')}}" value="{{$poolhall->number_of_tables}}">
+								<input type="number" class="form-control" name="number_of_tables" placeholder="{{trans('poolhall.number_of_tables')}}" value="">
 							</div>
 						 </div>
 						 <div class="col-lg-6">
 							<div class="form-group">
 								<label for="types_of_tables" class="content-label">{{trans('poolhall.types_of_tables')}}</label>
-								<input type="number" class="form-control" name="types_of_tables" placeholder="{{trans('poolhall.types_of_tables')}}" value="{{$poolhall->types_of_tables}}">
+								<input type="number" class="form-control" name="types_of_tables" placeholder="{{trans('poolhall.types_of_tables')}}" value="">
 							</div>
 						 </div>
 					</div>

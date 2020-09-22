@@ -58,91 +58,99 @@
 							 <label for="description:<?php echo e($lk); ?>" class="content-label"><?php echo e(trans('poolhall.description')); ?></label>
 							 <p><?php echo e($poolhall->translate($lk)->description); ?></p>
 						  </div>
+						  <div class="form-group">
+							 <label for="address:<?php echo e($lk); ?>" class="content-label"><?php echo e(trans('poolhall.address')); ?></label>
+							 <p><?php echo e($poolhall->translate($lk)->address); ?></p>
+						  </div>
 						</div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                   </div>  
 				  
-                  <div class="form-group">
-                     <label for="title" class="content-label"><?php echo e(trans('poolhall.createdBy')); ?></label>
-                     <p></p>
-                  </div>
+				  <div class="form-group">
+						 <label for="price" class="content-label"><?php echo e(trans('poolhall.price')); ?></label>
+						  <p><?php echo e($poolhall->price); ?></p>
+				  </div>
                   <div class="row">
                      <div class="col-lg-6">
                         <div class="form-group">
-                           <label for="start_date" class="content-label"><?php echo e(trans('poolhall.start_time')); ?></label>
-                           <p><?php echo e($poolhall->start_date); ?></p>
+                           <label for="start_time" class="content-label"><?php echo e(trans('poolhall.start_time')); ?></label>
+                           <p><?php echo e($poolhall->start_time); ?></p>
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="form-group">
-                           <label for="end_date" class="content-label"><?php echo e(trans('poolhall.end_time')); ?></label>
-                           <p><?php echo e($poolhall->end_date); ?></p>
+                           <label for="end_time" class="content-label"><?php echo e(trans('poolhall.end_time')); ?></label>
+                          <p><?php echo e($poolhall->end_time); ?></p>
                         </div>
                      </div>
                   </div>
-                  <div class="row">
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="status" class="content-label"><?php echo e(trans('poolhall.status')); ?></label>
-                           <p><?php echo e($poolhall->status); ?></p>
-                        </div>
-                     </div>
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="social_media_link" class="content-label"><?php echo e(trans('poolhall.social_media_link')); ?></label>
-                           <p><?php echo e($poolhall->social_media_link); ?></p>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="number_of_tables" class="content-label"><?php echo e(trans('poolhall.number_of_tables')); ?></label>
-                     <p><?php echo e($poolhall->number_of_tables); ?></p>
-                  </div>
-                  
+                 
                </div>
                <div class="col-lg-6">
                   <div class="form-group">
                      <label for="country" class="content-label"><?php echo e(trans('poolhall.country')); ?></label>
                      <p><?php echo e($poolhall->countries['country_name']); ?></p>
                   </div>
-                  <div class="form-group">
-                     <label for="types_of_tables" class="content-label"><?php echo e(trans('poolhall.types_of_tables')); ?></label>
-                     <p><?php echo e($poolhall->types_of_tables); ?></p>
-                  </div>
-                  <div class="form-group">
-                     <label for="price" class="content-label"><?php echo e(trans('poolhall.price')); ?></label>
-                     <p><?php echo e($poolhall->price); ?></p>
-                  </div>
-                  <div class="row">
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="email" class="content-label"><?php echo e(trans('poolhall.email')); ?></label>
-                           <p><?php echo e($poolhall->email); ?></p>
-                        </div>
-                     </div>
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="phone_number" class="content-label"><?php echo e(trans('poolhall.phonenumber')); ?></label>
-                           <p><?php echo e($poolhall->phone_number); ?></p>
-                        </div>
-                     </div>
-					</div> 
-                     <div class="row">
-                        <div class="col-lg-6">
-                           <div class="form-group">
-                              <label for="address" class="content-label"><?php echo e(trans('poolhall.address')); ?></label>
-                              <p><?php echo e($poolhall->address); ?></p>
-                           </div>
-                        </div>
-                        <div class="col-lg-6">
+				  <div class="row">
+						 <div class="col-lg-6">
+							<div class="form-group">
+							    <label for="email" class="content-label"><?php echo e(trans('poolhall.email')); ?></label>
+								<p><?php echo e($poolhall->email); ?></p>
+							</div>
+						 </div>
+						 <div class="col-lg-6">
+							<div class="form-group">
                            
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <label for="poolhall_banner" class="content-label"><?php echo e(trans('poolhall.pool_image')); ?></label>
-                        <p></p>
-                     </div>
-                    
+							   <label for="phone_number" class="content-label"><?php echo e(trans('poolhall.phonenumber')); ?></label>
+							   <div class="row">
+								<div class="col-lg-3">
+									<p><?php echo e($poolhall->country_code); ?></p>
+									
+							   </div>
+							   <div class="col-lg-9">
+									<p><?php echo e($poolhall->phone_number); ?></p>
+							   </div></div>
+							  
+							</div>
+						 </div>
+					</div>
+					<div class="row">
+						 <div class="col-lg-6">
+							<div class="form-group">
+							  <label for="createdBy" class="content-label"><?php echo e(trans('poolhall.createdBy')); ?></label>
+							  <p><?php echo e($poolhall['users']->name); ?></p>
+							</div>
+						 </div>
+						 <div class="col-lg-6">
+							<div class="form-group">
+								<label for="status" class="content-label"><?php echo e(trans('poolhall.status')); ?></label>
+								<p><?php echo e($poolhall->status); ?></p>
+							</div>
+						 </div>
+					</div>
+					<div class="form-group">
+						<label for="social_media_link" class="content-label"><?php echo e(trans('poolhall.social_media_link')); ?></label>
+						<p><?php echo e($poolhall->social_media_link); ?></p>
+					</div>
+					<div class="row">
+						 <div class="col-lg-6">
+							<div class="form-group">
+							  <label for="number_of_tables" class="content-label"><?php echo e(trans('poolhall.number_of_tables')); ?></label>
+								<p><?php echo e($poolhall->number_of_tables); ?></p>
+							</div>
+						 </div>
+						 <div class="col-lg-6">
+							<div class="form-group">
+								<label for="types_of_tables" class="content-label"><?php echo e(trans('poolhall.types_of_tables')); ?></label>
+								<p><?php echo e($poolhall->types_of_tables); ?></p>
+							</div>
+						 </div>
+					</div>
+					<div class="form-group">
+						<label for="name" class="content-label"><?php echo e(trans('poolhall.poolhall_image')); ?></label>
+						<p></p>
+					</div>
+                  
                   </div>
                </div>
             </div>
