@@ -55,3 +55,12 @@ Route::group([
         Route::get('list', 'TournamentController@list');
         Route::post('detail', 'TournamentController@detail');
     });
+//################# Tutor API #########################
+ Route::group([
+      'middleware' => 'auth:api',
+	  'prefix' => 'tutor','namespace' => 'Api'
+    ], function() {
+        Route::post('create', 'TutroController@create');
+        Route::get('list', 'TutroController@list');
+        Route::post('detail', 'TutroController@detail');
+    });	

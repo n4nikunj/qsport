@@ -141,6 +141,14 @@ $routename = Route::currentRouteName();
             <i class="fa fa fa-map"></i> <span><?php echo e(trans('admin.countries')); ?></span>
           </a>
         </li>
+        <?php endif; ?>
+		<!-- Pool Hall List -->
+		<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pool_hall-list')): ?>
+        <li class="<?php echo e((request()->is('admin/pool_hall')) ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('pool_hall.index')); ?>">
+            <i class="fa fa fa-map"></i> <span><?php echo e(trans('admin.poolhall')); ?></span>
+          </a>
+        </li>
         <?php endif; ?>  
         <!-- enquiry -->
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('enquiry-list')): ?>

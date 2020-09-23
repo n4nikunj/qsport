@@ -25,5 +25,5 @@ class TournamentTranslation extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['title', 'description'];
 }

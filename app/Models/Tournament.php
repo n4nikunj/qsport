@@ -17,7 +17,7 @@ class Tournament extends Model
      */
     protected $with = ['translations'];
 	
-    protected $fillable = ['country_id', 'venue', 'hotel_name','email','country_code','phone_number','maximum_Player','start_date','end_date','entry_fee','priceMoney','status','watch_live'];
+    protected $fillable = ['country_id', 'venue', 'hotel_name','email','country_code','phone_number','maximum_Player','start_date','end_date','entry_fee','currency','priceMoney','status','amountPaid','watch_live','created_by'];
 	/**
      * @var string
      */

@@ -124,7 +124,7 @@
          { data: 'title' },
          { data: 'venue' },
          { data: 'hotel_name' },
-         { data: 'country_name' },
+         { data: 'country_id' },
          { data: 'email' },
          { data: 'phone_number' },
          { data: 'start_date' },
