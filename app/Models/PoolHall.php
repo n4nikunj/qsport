@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Country;
+use App\Models\User;
 use Astrotomic\Translatable\Translatable;
 use App\Models\Translations\PoolHallTranslation;
 
@@ -16,9 +17,9 @@ class PoolHall extends Model
      *
      * @var array
      */
-    protected $with = ['translations','countries'];
+    protected $with = ['translations','countries','users'];
 	
-    protected $fillable = ['pool_image','title','email','phone_number','description','country_id','address','social_media_link','number_of_tables','types_of_tables','price','start_time','end_time','status'];
+    protected $fillable = ['pool_image','email','phone_number','country_code','country_id','social_media_link','number_of_tables','types_of_tables','price','start_time','end_time','status','created_by'];
 	/**
      * @var string
      */
@@ -27,7 +28,7 @@ class PoolHall extends Model
      *
      * @var array
      */
-    public $translatedAttributes = ['title', 'description'];
+    public $translatedAttributes = ['title', 'description','address'];
 
     /**
      * @var string
@@ -45,5 +46,8 @@ class PoolHall extends Model
     {
          return $this->hasOne(Country::class,'id','country_id');
     }
-
+	public function users()
+    {
+         return $this->hasOne(User::class,'id','created_by');
+    }
 }

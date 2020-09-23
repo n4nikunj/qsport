@@ -56,91 +56,99 @@
 							 <label for="description:{{$lk}}" class="content-label">{{trans('poolhall.description')}}</label>
 							 <p>{{$poolhall->translate($lk)->description}}</p>
 						  </div>
+						  <div class="form-group">
+							 <label for="address:{{$lk}}" class="content-label">{{trans('poolhall.address')}}</label>
+							 <p>{{$poolhall->translate($lk)->address}}</p>
+						  </div>
 						</div>
                     @endforeach
                   </div>  
 				  
-                  <div class="form-group">
-                     <label for="title" class="content-label">{{trans('poolhall.createdBy')}}</label>
-                     <p></p>
-                  </div>
+				  <div class="form-group">
+						 <label for="price" class="content-label">{{trans('poolhall.price')}}</label>
+						  <p>{{$poolhall->price}}</p>
+				  </div>
                   <div class="row">
                      <div class="col-lg-6">
                         <div class="form-group">
-                           <label for="start_date" class="content-label">{{trans('poolhall.start_time')}}</label>
-                           <p>{{$poolhall->start_date}}</p>
+                           <label for="start_time" class="content-label">{{trans('poolhall.start_time')}}</label>
+                           <p>{{$poolhall->start_time}}</p>
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="form-group">
-                           <label for="end_date" class="content-label">{{trans('poolhall.end_time')}}</label>
-                           <p>{{$poolhall->end_date}}</p>
+                           <label for="end_time" class="content-label">{{trans('poolhall.end_time')}}</label>
+                          <p>{{$poolhall->end_time}}</p>
                         </div>
                      </div>
                   </div>
-                  <div class="row">
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="status" class="content-label">{{trans('poolhall.status')}}</label>
-                           <p>{{$poolhall->status}}</p>
-                        </div>
-                     </div>
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="social_media_link" class="content-label">{{trans('poolhall.social_media_link')}}</label>
-                           <p>{{$poolhall->social_media_link}}</p>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="number_of_tables" class="content-label">{{trans('poolhall.number_of_tables')}}</label>
-                     <p>{{$poolhall->number_of_tables}}</p>
-                  </div>
-                  
+                 
                </div>
                <div class="col-lg-6">
                   <div class="form-group">
                      <label for="country" class="content-label">{{trans('poolhall.country')}}</label>
                      <p>{{$poolhall->countries['country_name']}}</p>
                   </div>
-                  <div class="form-group">
-                     <label for="types_of_tables" class="content-label">{{trans('poolhall.types_of_tables')}}</label>
-                     <p>{{$poolhall->types_of_tables}}</p>
-                  </div>
-                  <div class="form-group">
-                     <label for="price" class="content-label">{{trans('poolhall.price')}}</label>
-                     <p>{{$poolhall->price}}</p>
-                  </div>
-                  <div class="row">
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="email" class="content-label">{{trans('poolhall.email')}}</label>
-                           <p>{{$poolhall->email}}</p>
-                        </div>
-                     </div>
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="phone_number" class="content-label">{{trans('poolhall.phonenumber')}}</label>
-                           <p>{{$poolhall->phone_number}}</p>
-                        </div>
-                     </div>
-					</div> 
-                     <div class="row">
-                        <div class="col-lg-6">
-                           <div class="form-group">
-                              <label for="address" class="content-label">{{trans('poolhall.address')}}</label>
-                              <p>{{$poolhall->address}}</p>
-                           </div>
-                        </div>
-                        <div class="col-lg-6">
+				  <div class="row">
+						 <div class="col-lg-6">
+							<div class="form-group">
+							    <label for="email" class="content-label">{{trans('poolhall.email')}}</label>
+								<p>{{$poolhall->email}}</p>
+							</div>
+						 </div>
+						 <div class="col-lg-6">
+							<div class="form-group">
                            
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <label for="poolhall_banner" class="content-label">{{trans('poolhall.pool_image')}}</label>
-                        <p></p>
-                     </div>
-                    
+							   <label for="phone_number" class="content-label">{{trans('poolhall.phonenumber')}}</label>
+							   <div class="row">
+								<div class="col-lg-3">
+									<p>{{$poolhall->country_code}}</p>
+									
+							   </div>
+							   <div class="col-lg-9">
+									<p>{{$poolhall->phone_number}}</p>
+							   </div></div>
+							  
+							</div>
+						 </div>
+					</div>
+					<div class="row">
+						 <div class="col-lg-6">
+							<div class="form-group">
+							  <label for="createdBy" class="content-label">{{trans('poolhall.createdBy')}}</label>
+							  <p>{{$poolhall['users']->name}}</p>
+							</div>
+						 </div>
+						 <div class="col-lg-6">
+							<div class="form-group">
+								<label for="status" class="content-label">{{trans('poolhall.status')}}</label>
+								<p>{{$poolhall->status}}</p>
+							</div>
+						 </div>
+					</div>
+					<div class="form-group">
+						<label for="social_media_link" class="content-label">{{trans('poolhall.social_media_link')}}</label>
+						<p>{{$poolhall->social_media_link}}</p>
+					</div>
+					<div class="row">
+						 <div class="col-lg-6">
+							<div class="form-group">
+							  <label for="number_of_tables" class="content-label">{{trans('poolhall.number_of_tables')}}</label>
+								<p>{{$poolhall->number_of_tables}}</p>
+							</div>
+						 </div>
+						 <div class="col-lg-6">
+							<div class="form-group">
+								<label for="types_of_tables" class="content-label">{{trans('poolhall.types_of_tables')}}</label>
+								<p>{{$poolhall->types_of_tables}}</p>
+							</div>
+						 </div>
+					</div>
+					<div class="form-group">
+						<label for="name" class="content-label">{{trans('poolhall.poolhall_image')}}</label>
+						<p></p>
+					</div>
+                  
                   </div>
                </div>
             </div>

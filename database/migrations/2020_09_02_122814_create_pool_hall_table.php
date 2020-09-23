@@ -17,12 +17,10 @@ class CreatePoolHallTable extends Migration
 		Schema::create('pool_hall', function (Blueprint $table) {
             $table->bigIncrements('id');
 			$table->string('pool_image',255);
-			$table->string('title');
 			$table->string('email');
+			$table->string('country_code');
 			$table->string('phone_number');
-			$table->text('description');
 			$table->Integer('country_id')->unsigned();
-			$table->text('address');
             $table->string('social_media_link');
             $table->Integer('number_of_tables');
 			$table->string('types_of_tables');
@@ -30,6 +28,8 @@ class CreatePoolHallTable extends Migration
 			$table->time('start_time');
 			$table->time('end_time');
 			$table->enum('status',['active','inactive'])->default('active');
+			$table->bigInteger('created_by')->unsigned()->nullable();
+			$table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
 			$table->timestamps();
         });
@@ -39,6 +39,7 @@ class CreatePoolHallTable extends Migration
             $table->bigInteger('pool_hall_id')->unsigned();
             $table->string('title');
 			$table->text('description');
+			$table->text('address');
             $table->string('locale')->index();
             $table->unique(['pool_hall_id', 'locale']);
             $table->foreign('pool_hall_id')->references('id')->on('pool_hall')->onDelete('cascade');

@@ -143,6 +143,14 @@ $routename = Route::currentRouteName();
             <i class="fa fa fa-map"></i> <span>{{trans('admin.poolhall')}}</span>
           </a>
         </li>
+        @endcan
+		<!-- Watch Live List -->
+		@can('watch_live-list')
+        <li class="{{ (request()->is('admin/watch_live')) ? 'active' : '' }}">
+          <a href="{{route('watch_live.index')}}">
+            <i class="fa fa fa-map"></i> <span>{{trans('admin.watchlive')}}</span>
+          </a>
+        </li>
         @endcan  
         <!-- enquiry -->
         @can('enquiry-list')
@@ -178,7 +186,8 @@ $routename = Route::currentRouteName();
             <i class="fa fa fa-map"></i> <span>{{trans('admin.sponsors')}}</span>
           </a>
         </li>
-        @endcan  
+        @endcan
+		
         @can('quiz-list')
         <li class="treeview {{ (request()->is('admin/quiz*') || request()->is('admin/levels*')) ? 'active menu-open' : '' }}">
           <a href="#">

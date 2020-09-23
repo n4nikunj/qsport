@@ -149,6 +149,14 @@ $routename = Route::currentRouteName();
             <i class="fa fa fa-map"></i> <span><?php echo e(trans('admin.poolhall')); ?></span>
           </a>
         </li>
+        <?php endif; ?>
+		<!-- Watch Live List -->
+		<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('watch_live-list')): ?>
+        <li class="<?php echo e((request()->is('admin/watch_live')) ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('watch_live.index')); ?>">
+            <i class="fa fa fa-map"></i> <span><?php echo e(trans('admin.watchlive')); ?></span>
+          </a>
+        </li>
         <?php endif; ?>  
         <!-- enquiry -->
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('enquiry-list')): ?>
@@ -176,7 +184,8 @@ $routename = Route::currentRouteName();
             <i class="fa fa fa-map"></i> <span><?php echo e(trans('admin.sponsors')); ?></span>
           </a>
         </li>
-        <?php endif; ?>  
+        <?php endif; ?>
+		
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('quiz-list')): ?>
         <li class="treeview <?php echo e((request()->is('admin/quiz*') || request()->is('admin/levels*')) ? 'active menu-open' : ''); ?>">
           <a href="#">

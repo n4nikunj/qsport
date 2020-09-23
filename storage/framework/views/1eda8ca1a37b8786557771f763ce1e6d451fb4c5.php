@@ -51,24 +51,29 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                   </ul>
 					<div class="tab-content" style="margin-top: 10px;">
-                    <?php $__currentLoopData = config('app.locales'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lk=>$lv): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <div role="tabpanel" class="tab-pane <?php if($lk=='en'): ?> active <?php endif; ?>" id="abc_<?php echo e($lk); ?>">
-							<div class="form-group">
-								 <label for="title:<?php echo e($lk); ?>" class="content-label"><?php echo e(trans('poolhall.title')); ?></label>
-								 <input type="text" class="form-control" name="title:<?php echo e($lk); ?>" placeholder="<?php echo e(trans('poolhall.title')); ?>" value="<?php echo e($poolhall->translate($lk)->title); ?>">
+						<?php $__currentLoopData = config('app.locales'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lk=>$lv): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						  <div role="tabpanel" class="tab-pane <?php if($lk=='en'): ?> active <?php endif; ?>" id="abc_<?php echo e($lk); ?>">
+								<div class="form-group">
+									 <label for="title:<?php echo e($lk); ?>" class="content-label"><?php echo e(trans('poolhall.title')); ?></label>
+									 <input type="text" class="form-control" name="title:<?php echo e($lk); ?>" placeholder="<?php echo e(trans('poolhall.title')); ?>" value="<?php echo e($poolhall->translate($lk)->title); ?>">
+								</div>
+								<div class="form-group">
+									<label for="description:<?php echo e($lk); ?>" class="content-label"><?php echo e(trans('poolhall.description')); ?></label>
+									<textarea class="form-control" minlength="2" maxlength="255"  name="description:<?php echo e($lk); ?>"><?php echo e($poolhall->translate($lk)->description); ?></textarea>
+								</div>
+								<div class="form-group">
+										<label for="address:<?php echo e($lk); ?>" class="content-label"><?php echo e(trans('poolhall.address')); ?></label>
+										<textarea class="form-control" minlength="2" maxlength="255"  name="address:<?php echo e($lk); ?>"><?php echo e($poolhall->translate($lk)->address); ?></textarea>
+								</div>
 							</div>
-							 <div class="form-group">
-							 <label for="description:<?php echo e($lk); ?>" class="content-label"><?php echo e(trans('poolhall.description')); ?></label>
-							 <textarea class="form-control" minlength="2" maxlength="255"  name="description:<?php echo e($lk); ?>"><?php echo e($poolhall->translate($lk)->description); ?></textarea>
-							
-						  </div>
-						</div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                  </div>  
-					 <div class="form-group">
-                     <label for="createdBy" class="content-label"><?php echo e(trans('poolhall.createdBy')); ?></label>
-                   <input type="text" class="form-control" name="created_by" placeholder="<?php echo e(trans('poolhall.createdBy')); ?>" value="">
-                  </div>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>  
+					
+					
+				  <div class="form-group">
+						 <label for="price" class="content-label"><?php echo e(trans('poolhall.price')); ?></label>
+						  <input type="text" class="form-control" name="price" placeholder="<?php echo e(trans('poolhall.price')); ?>" value="<?php echo e($poolhall->price); ?>">
+				  </div>
                   <div class="row">
                      <div class="col-lg-6">
                         <div class="form-group">
@@ -83,29 +88,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="row">
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="status" class="content-label"><?php echo e(trans('poolhall.status')); ?></label>
-                      <select name="status" class="form-control" >
-                      <option value="<?php echo e(trans('poolhall.active')); ?>"><?php echo e(trans('poolhall.active')); ?></option>
-                      <option value="<?php echo e(trans('poolhall.active')); ?>"><?php echo e(trans('poolhall.inactive')); ?></option>
-                    </select>
-                        </div>
-                     </div>
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="social_media_link" class="content-label"><?php echo e(trans('poolhall.social_media_link')); ?></label>
-							<input type="text" class="form-control" name="social_media_link" placeholder="<?php echo e(trans('poolhall.social_media_link')); ?>" value="<?php echo e($poolhall->social_media_link); ?>">
-                        </div>
-                     </div>
-                  </div>
-				  <div class="form-group">
-                     <label for="number_of_tables" class="content-label"><?php echo e(trans('poolhall.number_of_tables')); ?></label>
-					 <input type="number" class="form-control" name="number_of_tables" placeholder="<?php echo e(trans('poolhall.number_of_tables')); ?>" value="<?php echo e($poolhall->number_of_tables); ?>">
-					
-                  </div>
-                 
+				 
                 </div>
                 <div class="col-lg-6">
 					<div class="form-group">
@@ -119,40 +102,77 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 					  </select>
                      <p></p>
-                  </div>
-                  <div class="form-group">
-                     <label for="price" class="content-label"><?php echo e(trans('poolhall.price')); ?></label>
-					  <input type="text" class="form-control" name="price" placeholder="<?php echo e(trans('poolhall.price')); ?>" value="<?php echo e($poolhall->price); ?>">
-					  
-                  </div>
-                  
-                  <div class="row">
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="email" class="content-label"><?php echo e(trans('poolhall.email')); ?></label>
-                          
-						   <input type="text" class="form-control" name="email" placeholder="<?php echo e(trans('poolhall.email')); ?>" value="<?php echo e($poolhall->email); ?>">
-                        </div>
-                     </div>
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                           <label for="phone_number" class="content-label"><?php echo e(trans('poolhall.phonenumber')); ?></label>
-						   <div class="row">
-							<div class="col-lg-3">
-						   </div>
-						   <div class="col-lg-9">
-						   <input type="text" class="form-control col-lg-6" name="phone_number" placeholder="<?php echo e(trans('poolhall.phonenumber')); ?>" value="<?php echo e($poolhall->phone_number); ?>">
-						   </div></div>
-                          
-                        </div>
-                     </div>
-					</div> 
-                  <div class="form-group">
-                    <label for="name" class="content-label"><?php echo e(trans('poolhall.poolhall_image')); ?></label>
-                    <input type="file" class="form-control" name="poolhall_image" accept=".jpg, .png, .jpeg, .PNG, .JPEG, .JPG, .gif">
-                    
-                  </div>
-                  
+					</div>
+					<div class="row">
+						 <div class="col-lg-6">
+							<div class="form-group">
+							   <label for="email" class="content-label"><?php echo e(trans('poolhall.email')); ?></label>
+							  
+							   <input type="text" class="form-control" name="email" placeholder="<?php echo e(trans('poolhall.email')); ?>" value="<?php echo e($poolhall->email); ?>">
+							</div>
+						 </div>
+						 <div class="col-lg-6">
+							<div class="form-group">
+							   <label for="phone_number" class="content-label"><?php echo e(trans('poolhall.phonenumber')); ?></label>
+							   <div class="row">
+								<div class="col-lg-3">
+									<select name="country_code" class="form-control" >
+										<option value=""><?php echo e(trans('poolhall.select_dial_code')); ?></option>
+										<?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										  <option value="<?php echo e($country->dial_code); ?>" <?php if($poolhall->country_code == $country->dial_code): ?> selected <?php endif; ?>>
+											<?php echo e($country->dial_code); ?> 
+										  </option>    
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+									  </select>
+							   </div>
+							   <div class="col-lg-9">
+									<input type="text" class="form-control col-lg-6" name="phone_number" placeholder="<?php echo e(trans('poolhall.phonenumber')); ?>" value="<?php echo e($poolhall->phone_number); ?>">
+							   </div></div>
+							  
+							</div>
+						 </div>
+					</div>
+					<div class="row">
+						 <div class="col-lg-6">
+							<div class="form-group">
+							  <label for="createdBy" class="content-label"><?php echo e(trans('poolhall.createdBy')); ?></label>
+							  <input type="hidden" name="created_by" value="<?php echo e($poolhall->created_by); ?>">
+							  <input type="text" class="form-control"  readOnly placeholder="<?php echo e(trans('poolhall.createdBy')); ?>" value="<?php echo e($poolhall['users']->name); ?>">
+							</div>
+						 </div>
+						 <div class="col-lg-6">
+							<div class="form-group">
+								<label for="status" class="content-label"><?php echo e(trans('poolhall.status')); ?></label>
+								<select name="status" class="form-control" >
+								  <option value="<?php echo e(trans('poolhall.active')); ?>"><?php echo e(trans('poolhall.active')); ?></option>
+								  <option value="<?php echo e(trans('poolhall.active')); ?>"><?php echo e(trans('poolhall.inactive')); ?></option>
+								</select>
+							</div>
+						 </div>
+					</div>
+					<div class="form-group">
+						<label for="social_media_link" class="content-label"><?php echo e(trans('poolhall.social_media_link')); ?></label>
+						<input type="text" class="form-control" name="social_media_link" placeholder="<?php echo e(trans('poolhall.social_media_link')); ?>" value="<?php echo e($poolhall->social_media_link); ?>">
+					</div>
+					<div class="row">
+						 <div class="col-lg-6">
+							<div class="form-group">
+							  <label for="number_of_tables" class="content-label"><?php echo e(trans('poolhall.number_of_tables')); ?></label>
+								<input type="number" class="form-control" name="number_of_tables" placeholder="<?php echo e(trans('poolhall.number_of_tables')); ?>" value="<?php echo e($poolhall->number_of_tables); ?>">
+							</div>
+						 </div>
+						 <div class="col-lg-6">
+							<div class="form-group">
+								<label for="types_of_tables" class="content-label"><?php echo e(trans('poolhall.types_of_tables')); ?></label>
+								<input type="number" class="form-control" name="types_of_tables" placeholder="<?php echo e(trans('poolhall.types_of_tables')); ?>" value="<?php echo e($poolhall->types_of_tables); ?>">
+							</div>
+						 </div>
+					</div>
+					<div class="form-group">
+						<label for="name" class="content-label"><?php echo e(trans('poolhall.poolhall_image')); ?></label>
+						<input type="file" class="form-control" name="pool_image" accept=".jpg, .png, .jpeg, .PNG, .JPEG, .JPG, .gif">
+						
+					</div>
                 </div>
               </div>
               

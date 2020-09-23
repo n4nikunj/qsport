@@ -4,14 +4,14 @@ namespace App\Models\Translations;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PoolHallTranslation extends Model
+class WatchLiveTranslation extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'pool_hall_translations';
+    protected $table = 'watch_live_translations';
 
     /**
      * Indicates if the model should be timestamped.
@@ -25,5 +25,5 @@ class PoolHallTranslation extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'description','address'];
+    protected $fillable = ['match_name'];
 }

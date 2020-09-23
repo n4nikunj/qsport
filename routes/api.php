@@ -46,6 +46,7 @@ Route::group([
         Route::get('list', 'SportsController@list');
         Route::get('user', 'UserController@user');
     });
+
 //################# Tournament API #########################
  Route::group([
       'middleware' => 'auth:api',
@@ -64,3 +65,23 @@ Route::group([
         Route::get('list', 'TutroController@list');
         Route::post('detail', 'TutroController@detail');
     });	
+
+//################# PoolHall API #########################
+ Route::group([
+      'middleware' => 'auth:api',
+	  'prefix' => 'poolhall','namespace' => 'Api'
+    ], function() {
+        Route::get('list', 'PoolHallController@list');
+        Route::post('updatePool/{id}', 'PoolHallController@updatePool');
+		Route::post('createPool', 'PoolHallController@createPool');
+		Route::get('user', 'UserController@user');
+    });
+
+/* Route::post('login', 'Api\UserController@login');
+Route::post('register', 'API\UserController@register');
+Route::get('list', 'Api\UserController@listdata');
+
+Route::group(['middleware' => 'auth:api'], function(){
+Route::post('details', 'API\UserController@details');
+}); */
+

@@ -29,6 +29,7 @@ return [
 
     //messages
     'added' => 'Sponsor Added Successfully',
+	'updated' => 'Sponsor Updated Successfully',
     'deleted' => 'Sponsor Deleted Successfully',
 	'sponsor_status_update_sucessfully'  => 'Sponsor Status Update Successfully',
     'sponsor_status_update_unsucessfully'  => 'Sponsor Status Update UnSuccessfully',

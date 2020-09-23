@@ -64,6 +64,7 @@ class SponsorsController extends Controller
 		
 			$emp['logo'] = str_replace('http://localhost',url("/"),$emp->getMedia('sponsor_logo')->last()->getUrl('thumb'));
             $emp['show']= route("sponsors.show",$emp["id"]);
+			$emp['edit']= route("sponsors.edit",$emp["id"]);
             $emp['delete'] = route("sponsors.destroy",$emp["id"]);
             
           $data[]=$emp;
@@ -80,6 +81,7 @@ class SponsorsController extends Controller
         echo json_encode($response);
 
     }
+	
 	/**
      * Show the form for creating a new item.
      *
@@ -125,6 +127,57 @@ class SponsorsController extends Controller
         }
 
     }
+	public function edit($id)
+    {
+		$page_title = trans('sponsors.edit');
+		$sponsors = Sponsors::find($id);
+        $users = User::where('status','active')->get();
+		$countries = Country::where('status','active')->get();
+        return view('admin.sponsor.edit', compact('page_title','sponsors','users','countries'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        
+		$validator= $request->validate([
+        'user_id' => 'required',
+        'name' => 'required',
+        'website' => 'required|url',
+        'phoneno' => 'required',
+        'email' => 'required|email',
+        ]);
+        
+        $data = $request->all();
+		$sponsors = Sponsors::find($id);
+		
+         if(isset($data['sponsor_logo'])) {
+            $sponsors->addMediaFromRequest('sponsor_logo')->toMediaCollection('sponsor_logo');
+        }
+
+
+        if($sponsors->update($data)){
+            return redirect()->route('sponsors.index')->with('success',trans('sponsors.updated'));
+        } else {
+            return redirect()->route('sponsors.index')->with('error',trans('common.something_went_wrong'));
+        }
+    }
+	
+	public function show($id)
+    {
+        $page_title = trans('sponsors.show');
+        $sponsors = Sponsors::find($id);
+		$users = User::where('status','active')->get();
+        $countries = Country::where('status','active')->get();
+        return view('admin.sponsor.show',compact('countries','users','sponsors', 'page_title'));
+    }
+	
 	public function status(Request $request)
     {
         $Sponsors= Sponsors::where('id',$request->id)
