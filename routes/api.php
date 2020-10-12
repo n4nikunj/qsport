@@ -52,9 +52,26 @@ Route::group([
 	  'prefix' => 'poolhall','namespace' => 'Api'
     ], function() {
         Route::post('create', 'PoolHallController@create');
-		Route::put('update/{id}', 'PoolHallController@update');
+		//Route::put('update/{id}', 'PoolHallController@update');
         Route::get('list', 'PoolHallController@list');
-        Route::post('detail', 'PoolHallController@detail');
+        Route::get('detail/{id}', 'PoolHallController@detail');
+    });
+//################# Sponsor API #########################
+ Route::group([
+      'middleware' => 'auth:api',
+	  'prefix' => 'sponsors','namespace' => 'Api'
+    ], function() {
+        Route::post('create', 'SponsorsController@create');
+        Route::get('list', 'SponsorsController@list');
+        Route::get('detail/{id}', 'SponsorsController@detail');
+    });
+//################# Watch Live API #########################
+ Route::group([
+      'middleware' => 'auth:api',
+	  'prefix' => 'watchlive','namespace' => 'Api'
+    ], function() {
+        Route::get('list', 'WatchLiveController@list');
+        Route::get('detail/{id}', 'WatchLiveController@detail');
     });
 //################# Tournament API #########################
  Route::group([

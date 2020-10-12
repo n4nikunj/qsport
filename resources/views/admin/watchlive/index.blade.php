@@ -113,7 +113,9 @@
           url: "{{route('ajax_watch_live')}}",
           data: {"_token": "{{csrf_token()}}"},
       },
-	  
+	  columnDefs: [
+			{ orderable: false, targets: -1 }
+	  ],
       columns: [
          { data: 'id' },
          { data: 'match_name' },
