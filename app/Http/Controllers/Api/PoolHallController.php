@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PoolHall; 
+use Validator;
 
 class PoolHallController extends Controller
 {
@@ -24,12 +25,12 @@ class PoolHallController extends Controller
 		}
         return response()->json($poolhall);
     }
-	public function createPool(Request $request)
+	public function create(Request $request)
     {
-        $request->validate([
-            'title:en' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
-			'description:en' => 'required',
-			'address:en' => 'required',
+		$rules= [
+			'title' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
+			'description' => 'required',
+			'address' => 'required',
 			'country_id' => 'required',
 			'number_of_tables' => 'required',
 			'types_of_tables' => 'required',
@@ -39,23 +40,31 @@ class PoolHallController extends Controller
 			'start_time' => 'required',
 			'end_time' => 'required',
 			'price' => 'required'
-        ]);
+		];
 		
-        $data = $request->all();
-		$poolhall = PoolHall::create($data);
-		
-        return response()->json([
-            'message' => 'Successfully created Pool Hall!'
-        ], 201);
+      $validator = Validator::make($request->all(),$rules);  
+       if ($validator->fails()) {
+		 return response()->json([
+            'message' => $validator->errors()
+        ], 400);
+        
+		}else{
+			$data = $request->all();
+			$poolhall = PoolHall::create($data);
+			$poolhall->save();
+			return response()->json([
+				'message' => 'Successfully created poolhall!'
+			], 201);
+		}
 		
 		
     }
-	public function updatePool(Request $request,$id)
+	public function update(Request $request,$id)
     {
-        $request->validate([
-            'title:en' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
-			'description:en' => 'required',
-			'address:en' => 'required',
+		$rules= [
+			'title' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
+			'description' => 'required',
+			'address' => 'required',
 			'country_id' => 'required',
 			'number_of_tables' => 'required',
 			'types_of_tables' => 'required',
@@ -65,17 +74,31 @@ class PoolHallController extends Controller
 			'start_time' => 'required',
 			'end_time' => 'required',
 			'price' => 'required'
-        ]);
+		];
 		
-        $data = $request->all();
-        $poolhall = PoolHall::find($id);
-        $poolhall->update($data);
-
-		
-        return response()->json([
-            'message' => 'Successfully updated Pool Hall!'
-        ], 201);
-		
-		
+      $validator = Validator::make($request->all(),$rules);  
+       if ($validator->fails()) {
+		 return response()->json([
+            'message' => $validator->errors()
+        ], 400);
+        
+		}else{
+			$data = $request->all();
+			$poolhall = PoolHall::find($id);
+			$poolhall->update($data);
+			return response()->json([
+				'message' => 'Successfully updated poolhall!'
+			], 201);
+		}
+    }
+	public function detail($id)
+    {	
+		$tournament = Tournament::with('countries')->find($request->id);
+		if (!$tournament) {
+			return response()->json([
+				'message' => trans('tournament.empty')
+			], 404);
+		}
+        return response()->json($tournament);
     }
 }

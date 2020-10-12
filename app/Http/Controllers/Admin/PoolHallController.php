@@ -9,6 +9,7 @@ use App\Models\PoolHall;
 use App\Models\Tournament;
 use App\Models\Country;
 use App\Models\Helpers\GeneralConfigurationHelpers;
+use Carbon\Carbon;
 
 class PoolHallController extends Controller
 {
@@ -79,23 +80,21 @@ class PoolHallController extends Controller
 		
         $data = array();
         foreach ($empQuery as $emp) {
-			
         # Set dynamic route for action buttons
             $emp['country_id'] = $emp["countries"]['country_name'];
 			$emp['created_by'] = $emp["users"]['name'];
-            $emp['edit']= route("pool_hall.edit",$emp["id"]);
-            $emp['show']= route("pool_hall.show",$emp["id"]);
+			$emp['edit'] = route("pool_hall.edit",$emp["id"]);
+            $emp['show'] = route("pool_hall.show",$emp["id"]);
             $emp['delete'] = route("pool_hall.destroy",$emp["id"]);
-          $data[]=$emp;
+			$data[]=$emp;
         }
-        $response = array(
+        
+		$response = array(
           "draw" => intval($draw),
           "iTotalRecords" => $totalRecordwithFilter,
           "iTotalDisplayRecords" => $totalRecords,
           "aaData" => $data
         );
-	
-		
         echo json_encode($response);
 
     }
@@ -121,21 +120,38 @@ class PoolHallController extends Controller
     {
 		
         $validator= $request->validate([
-        'title:en' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
-        'description:en' => 'required',
-		'address:en' => 'required',
+		'pool_image' => 'required',
+        'title:en' => 'required|regex:/^[\pL\s\-]+$/u|min:5|max:100',
+		'title:ar' => 'required|min:5|max:100',
+        'description:en' => 'required|min:50|max:500',
+		'description:ar' => 'required|min:50|max:500',
+		'address:en' => 'required|min:50|max:500',
+		'address:ar' => 'required|min:50|max:500',
         'country_id' => 'required',
-        'number_of_tables' => 'required',
+        'number_of_tables' => 'required|numeric',
         'types_of_tables' => 'required',
-        'email' => 'required|email',
-        'phone_number' => 'required',
-		'social_media_link' => 'required',
+        'email' => 'required|email|min:5|max:100',
+		'country_code' => 'required',
+        'phone_number' => 'required|numeric|digits:10',
+		'social_media_link' => 'required|url',
         'start_time' => 'required',
         'end_time' => 'required',
-        'price' => 'required'
+        'price' => 'required|between:0,99.99'
         ]);
 
+		//checking start and end time validation
+        $start = strtotime(date('d-m-Y').' '.$request->start_time); 
+        $end = strtotime(date('d-m-Y').' '.$request->end_time);
+        if($start < time() ){
+            return redirect()->back()->with('error',trans('training_online.insert_proper_datetime'))->withInput($request->input());
+        }
+        if($start > $end){
+                return redirect()->back()->with('error',trans('training_online.insert_proper_datetime'))->withInput($request->input());
+        }
+		
         $data = $request->all();
+		
+		unset($data['pool_image']);
 		$poolhall = PoolHall::create($data);
         
         if(isset($data['pool_image'])) {
@@ -189,24 +205,40 @@ class PoolHallController extends Controller
     public function update(Request $request, $id)
     {
         $validator= $request->validate([
-        'title:en' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
-        'description:en' => 'required',
-		'address:en' => 'required',
+		'pool_image' => 'required',
+        'title:en' => 'required|regex:/^[\pL\s\-]+$/u|min:5|max:100',
+		'title:ar' => 'required|min:5|max:100',
+        'description:en' => 'required|min:50|max:500',
+		'description:ar' => 'required|min:50|max:500',
+		'address:en' => 'required|min:50|max:500',
+		'address:ar' => 'required|min:50|max:500',
         'country_id' => 'required',
-        'number_of_tables' => 'required',
+        'number_of_tables' => 'required|numeric',
         'types_of_tables' => 'required',
-        'email' => 'required|email',
-        'phone_number' => 'required',
-		'social_media_link' => 'required',
+        'email' => 'required|email|min:5|max:100',
+		'country_code' => 'required',
+        'phone_number' => 'required|numeric|digits:10',
+		'social_media_link' => 'required|url',
         'start_time' => 'required',
         'end_time' => 'required',
-        'price' => 'required'
+        'price' => 'required|between:0,99.99'
         ]);
+
+		//checking start and end time validation
+        $start = strtotime(date('d-m-Y').' '.$request->start_time); 
+        $end = strtotime(date('d-m-Y').' '.$request->end_time);
+        if($start < time() ){
+            return redirect()->back()->with('error',trans('training_online.insert_proper_datetime'))->withInput($request->input());
+        }
+        if($start > $end){
+                return redirect()->back()->with('error',trans('training_online.insert_proper_datetime'))->withInput($request->input());
+        }
 		
         $data = $request->all();
+		unset($data['pool_image']);
         $poolhall = PoolHall::find($id);
          if(isset($data['pool_image'])) {
-            $poolhall->addMediaFromRequest('pool_image')->toMediaCollection('pool_image');
+            //$poolhall->addMediaFromRequest('pool_image')->toMediaCollection('pool_image');
         }
 
 

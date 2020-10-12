@@ -16,7 +16,8 @@ class CreatePoolHallTable extends Migration
        
 		Schema::create('pool_hall', function (Blueprint $table) {
             $table->bigIncrements('id');
-			$table->string('pool_image',255);
+			$table->string('latitude');
+			$table->string('longitude');
 			$table->string('email');
 			$table->string('country_code');
 			$table->string('phone_number');

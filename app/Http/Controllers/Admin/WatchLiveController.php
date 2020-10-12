@@ -114,14 +114,16 @@ class WatchLiveController extends Controller
     {
         $validator= $request->validate([
         'match_name:en' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
+		'match_name:ar' => 'required|max:30',
         'start_date'  =>  'required|date',
 		'end_date'    =>  'required|date|after_or_equal:start_date',
-        'price' => 'required',
+        'price' => 'required|between:0,99.99',
         'online_link' => 'required|url',
         'match_image' => 'required'
         ]);
 
         $data = $request->all();
+		unset($data['match_image']);
 		$watchlive = WatchLive::create($data);
         
         if(isset($data['match_image'])) {
@@ -173,9 +175,10 @@ class WatchLiveController extends Controller
         
 		$validator= $request->validate([
         'match_name:en' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
+		'match_name:ar' => 'required|max:30',
         'start_date'  =>  'required|date',
 		'end_date'    =>  'required|date|after_or_equal:start_date',
-        'price' => 'required',
+        'price' => 'required|between:0,99.99',
         'online_link' => 'required|url',
         ]);
 

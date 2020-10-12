@@ -46,18 +46,18 @@
 				<div class="form-group">
                     <label for="sponsor_logo_image" class="content-label">{{trans('sponsors.logo')}}</label>
                     <p></p>
-                  </div>		
+                </div>		
                <div class="form-group">
                     <label for="sponsors_name" class="content-label">{{trans('sponsors.name')}}</label>
                     <p>{{$sponsors->name}}</p>
                 </div>
                 <div class="form-group">
                     <label for="sponsors_name" class="content-label">{{trans('sponsors.phonenumber')}}</label>
-                    <p>{{$sponsors->phoneno}}</p>
+                    <p>{{$sponsors->country_code}} {{$sponsors->phone_number}}</p>
                 </div>
 				<div class="form-group">
                     <label for="website" class="content-label">{{trans('sponsors.website')}}</label>
-                    <p>{{$sponsors->website}}</p>
+					<p><a href="<?php echo $sponsors->website; ?>" target="_blank">{{$sponsors->website}}</a></p>
                 </div>
 				
 			 <div class="form-group">
@@ -68,7 +68,10 @@
 			   <label for="sponsors_category" class="content-label">{{trans('sponsors.sponsor_category')}}</label>
 			   <p>{{$sponsors->sponsors_category}}</p>
 			</div>				
-			
+			<div class="form-group">
+			   <label for="amountPaid" class="content-label">{{trans('sponsors.amount_paid')}}</label>
+			   <p>{{$sponsors->amountPaid}}</p>
+			</div>	
             
         </div>
       </div>

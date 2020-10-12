@@ -65,7 +65,20 @@
 						</div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                   </div>  
-				  
+				  <div class="row">
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="latitude" class="content-label"><?php echo e(trans('poolhall.latitude')); ?></label>
+                           <p><?php echo e($poolhall->latitude); ?></p>
+                        </div>
+                     </div>
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="longitude" class="content-label"><?php echo e(trans('poolhall.longitude')); ?></label>
+                          <p><?php echo e($poolhall->longitude); ?></p>
+                        </div>
+                     </div>
+                  </div>
 				  <div class="form-group">
 						 <label for="price" class="content-label"><?php echo e(trans('poolhall.price')); ?></label>
 						  <p><?php echo e($poolhall->price); ?></p>
@@ -74,13 +87,13 @@
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="start_time" class="content-label"><?php echo e(trans('poolhall.start_time')); ?></label>
-                           <p><?php echo e($poolhall->start_time); ?></p>
+                           <p><?php echo e(date('g:i a',strtotime($poolhall->start_time))); ?></p>
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="end_time" class="content-label"><?php echo e(trans('poolhall.end_time')); ?></label>
-                          <p><?php echo e($poolhall->end_time); ?></p>
+                          <p><?php echo e(date('g:i a',strtotime($poolhall->end_time))); ?></p>
                         </div>
                      </div>
                   </div>
@@ -130,7 +143,7 @@
 					</div>
 					<div class="form-group">
 						<label for="social_media_link" class="content-label"><?php echo e(trans('poolhall.social_media_link')); ?></label>
-						<p><?php echo e($poolhall->social_media_link); ?></p>
+						<p><a href="<?php echo $poolhall->social_media_link; ?>" target="_blank"><?php echo e($poolhall->social_media_link); ?></a></p>
 					</div>
 					<div class="row">
 						 <div class="col-lg-6">

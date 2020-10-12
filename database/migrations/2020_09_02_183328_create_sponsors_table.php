@@ -18,7 +18,8 @@ class CreateSponsorsTable extends Migration
 			$table->bigInteger('user_id')->unsigned()->nullable();
             $table->string('name');
             $table->string('website');
-            $table->string('phoneno');
+            $table->string('country_code');
+			$table->string('phone_number');
             $table->string('email');
             $table->enum('sponsors_category', ['Standard','Premium'])->default('Standard');
             $table->enum('status', ['Active','Inactive'])->default('Active');
@@ -35,6 +36,6 @@ class CreateSponsorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sponsors');
+        //Schema::dropIfExists('sponsors');
     }
 }

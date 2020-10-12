@@ -66,10 +66,23 @@
 				
 			<div class="form-group">
 			    <label for="phone_number" class="content-label">{{trans('sponsors.phonenumber')}}</label>
-			  
-			  <input type="text" class="form-control col-lg-6" name="phoneno" placeholder="{{trans('sponsors.phonenumber')}}" value="{{$sponsors->phoneno}}">
+			    <div class="row">
+					<div class="col-lg-3">
+						<select name="country_code" class="form-control" >
+							<option value="">{{trans('sponsors.select_dial_code')}}</option>
+							@foreach($countries as $country)
+							  <option value="{{$country->dial_code}}" @if($sponsors->country_code == $country->dial_code) selected @endif>
+								{{$country->dial_code}} 
+							  </option>    
+							@endforeach
+						</select>
+				   </div>
+				   <div class="col-lg-9">
+						<input type="text" class="form-control col-lg-6" name="phone_number" placeholder="{{trans('sponsors.phonenumber')}}" value="{{$sponsors->phone_number}}">
+				   </div>
+			   </div>
 			</div>	
-			 <div class="form-group">
+			<div class="form-group">
 			   <label for="email" class="content-label">{{trans('sponsors.email')}}</label>
 			  
 			   <input type="text" class="form-control" name="email" placeholder="{{trans('sponsors.email')}}" value="{{$sponsors->email}}">
@@ -82,7 +95,10 @@
 				</select>
 			  
 			</div>				
-			
+			<div class="form-group">
+				<label for="amountPaid" class="content-label">{{trans('sponsors.amount_paid')}}</label>
+				<input type="text" class="form-control" name="amountPaid" placeholder="{{trans('sponsors.amount_paid')}}" value="{{$sponsors->amountPaid}}">
+			</div>
             <div class="modal-footer">
               <button id="edit_btn" type="submit" class="btn btn-info btn-fill btn-wd">{{trans('common.submit')}}</button>
             </div>

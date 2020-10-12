@@ -104,11 +104,13 @@ class SponsorsController extends Controller
         $validator= $request->validate([
         'user_id' => 'required',
         'name' => 'required',
-        
         'website' => 'required|url',
-        'phoneno' => 'required',
+        'country_code' => 'required',
+        'phone_number' => 'required|numeric|digits:10',
         'email' => 'required|email',
-        'sponsor_logo' => 'required',
+        'sponsors_category' => 'required',
+		'sponsor_logo' => 'required',
+		'amountPaid' => 'required|between:0,99.99'
         ]);
         
         $data = $request->all();
@@ -145,15 +147,16 @@ class SponsorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-		$validator= $request->validate([
+        $validator= $request->validate([
         'user_id' => 'required',
         'name' => 'required',
         'website' => 'required|url',
-        'phoneno' => 'required',
+        'country_code' => 'required',
+        'phone_number' => 'required|numeric|digits:10',
         'email' => 'required|email',
+        'sponsors_category' => 'required',
+		'amountPaid' => 'required|between:0,99.99'
         ]);
-        
         $data = $request->all();
 		$sponsors = Sponsors::find($id);
 		

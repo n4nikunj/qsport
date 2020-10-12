@@ -169,6 +169,14 @@ $routename = Route::currentRouteName();
           </a>
         </li>
         <?php endif; ?>
+		 <!-- tutor_list -->
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('tutor-list')): ?>
+        <li class="<?php echo e((request()->is('admin/tutors')) ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('tutors.index')); ?>">
+            <i class="fa fa fa-map"></i> <span><?php echo e(trans('admin.tutor')); ?></span>
+          </a>
+        </li>
+        <?php endif; ?>  
 		 <!-- tournament_list -->
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('tournament-list')): ?>
         <li class="<?php echo e((request()->is('admin/tournaments')) ? 'active' : ''); ?>">
