@@ -73,10 +73,10 @@
 							{{$country->dial_code}} 
 						  </option>    
 						@endforeach
-					  </select>
+					</select>
 			   </div>
 			   <div class="col-lg-9">
-			   <input type="text" class="form-control col-lg-6" name="phoneno" placeholder="{{trans('sponsors.phonenumber')}}" value="{{old('phoneno')}}">
+			   <input type="text" class="form-control col-lg-6" name="phone_number" placeholder="{{trans('sponsors.phonenumber')}}" value="{{old('phoneno')}}">
 			   </div></div>
 			  
 			</div>		
@@ -93,7 +93,10 @@
 				</select>
 			  
 			</div>				
-			
+			 <div class="form-group">
+					 <label for="amountPaid" class="content-label">{{trans('sponsors.amount_paid')}}</label>
+					  <input type="text" class="form-control" name="amountPaid" placeholder="{{trans('sponsors.amount_paid')}}" value="">
+			  </div>
             <div class="modal-footer">
               <button id="edit_btn" type="submit" class="btn btn-info btn-fill btn-wd">{{trans('common.submit')}}</button>
             </div>

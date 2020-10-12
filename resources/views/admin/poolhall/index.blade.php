@@ -113,7 +113,9 @@
           url: "{{route('ajax_pool_hall')}}",
           data: {"_token": "{{csrf_token()}}"},
       },
-	  
+	  columnDefs: [
+			{ orderable: false, targets: -1 }
+		],
       columns: [
          { data: 'id' },
          { data: 'title' },

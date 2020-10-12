@@ -12,7 +12,7 @@ class Sponsors extends Model implements HasMedia
 		use  HasMediaTrait;
     protected $table = 'sponsors';
 	protected $with = ['users'];
-	protected $fillable = ['user_id', 'name', 'website','phoneno','email','sponsors_category','status','start_date'];
+	protected $fillable = ['user_id', 'name', 'website','phone_number','country_code','email','sponsors_category','amountPaid','status','start_date'];
 	
 	 public function registerMediaConversions(Media $media = null)
     {

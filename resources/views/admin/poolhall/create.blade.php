@@ -65,7 +65,20 @@
 							</div>
 						@endforeach
                     </div>  
-					
+					<div class="row">
+						 <div class="col-lg-6">
+							<div class="form-group">
+							   <label for="latitude" class="content-label">{{trans('poolhall.latitude')}}</label>
+							   <input type="text" class="form-control" name="latitude" placeholder="{{trans('poolhall.latitude')}}" value="">
+							</div>
+						 </div>
+						 <div class="col-lg-6">
+							<div class="form-group">
+							  <label for="longitude" class="content-label">{{trans('poolhall.longitude')}}</label>
+							  <input type="text" name="longitude" class="form-control"  placeholder="{{trans('poolhall.longitude')}}" value="">
+							</div>
+						 </div>
+					</div>
 					
 				  <div class="form-group">
 						 <label for="price" class="content-label">{{trans('poolhall.price')}}</label>
@@ -110,9 +123,18 @@
 						 </div>
 						 <div class="col-lg-6">
 							<div class="form-group">
+							  <label for="createdBy" class="content-label">{{trans('poolhall.createdBy')}}</label>
+							  <input type="hidden" name="created_by" value="{{auth()->user()->id}}">
+							  <input type="text" class="form-control"  readOnly placeholder="{{trans('poolhall.createdBy')}}" value="{{auth()->user()->name}}">
+							</div>
+						 </div>
+					</div>
+					<div class="row">
+						 <div class="col-lg-12">
+							<div class="form-group">
 							   <label for="phone_number" class="content-label">{{trans('poolhall.phonenumber')}}</label>
 							   <div class="row">
-									<div class="col-lg-3">
+									<div class="col-lg-4">
 										<select name="country_code" class="form-control" >
 											<option value="">{{trans('poolhall.select_dial_code')}}</option>
 											@foreach($countries as $country)
@@ -122,29 +144,13 @@
 											@endforeach
 										  </select>
 								   </div>
-								   <div class="col-lg-9">
-										<input type="text" class="form-control col-lg-6" name="phone_number" placeholder="{{trans('poolhall.phonenumber')}}" value="{{old('phone_number')}}">
+
+								   <div class="col-lg-8">
+										<input type="text" class="form-control col-lg-6" name="phone_number" placeholder="{{trans('poolhall.phonenumber')}}" value="">
+
 								   </div>
 							   </div>
 							  
-							</div>
-						 </div>
-					</div>
-					<div class="row">
-						 <div class="col-lg-6">
-							<div class="form-group">
-							  <label for="createdBy" class="content-label">{{trans('poolhall.createdBy')}}</label>
-							  <input type="hidden" name="created_by" value="{{auth()->user()->id}}">
-							  <input type="text" class="form-control"  readOnly placeholder="{{trans('poolhall.createdBy')}}" value="{{auth()->user()->name}}">
-							</div>
-						 </div>
-						 <div class="col-lg-6">
-							<div class="form-group">
-								<label for="status" class="content-label">{{trans('poolhall.status')}}</label>
-								<select name="status" class="form-control" >
-								  <option value="{{trans('poolhall.active')}}">{{trans('poolhall.active')}}</option>
-								  <option value="{{trans('poolhall.active')}}">{{trans('poolhall.inactive')}}</option>
-								</select>
 							</div>
 						 </div>
 					</div>
@@ -162,7 +168,9 @@
 						 <div class="col-lg-6">
 							<div class="form-group">
 								<label for="types_of_tables" class="content-label">{{trans('poolhall.types_of_tables')}}</label>
+
 								<input type="number" class="form-control" name="types_of_tables" placeholder="{{trans('poolhall.types_of_tables')}}" value="{{old('types_of_tables')}}">
+
 							</div>
 						 </div>
 					</div>

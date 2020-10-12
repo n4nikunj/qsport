@@ -15,7 +15,6 @@ class CreateWatchLiveMasterTable extends Migration
     {
         Schema::create('watch_live', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('match_image',255);
             $table->string('start_date');
             $table->string('end_date');
             $table->string('price');

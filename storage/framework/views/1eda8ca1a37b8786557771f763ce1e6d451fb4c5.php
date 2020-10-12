@@ -68,7 +68,20 @@
 							</div>
 						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>  
-					
+					<div class="row">
+                     <div class="col-lg-6"> 
+                        <div class="form-group">
+                           <label for="latitude" class="content-label"><?php echo e(trans('poolhall.latitude')); ?></label>
+                           <input type="text" name="latitude" class="form-control" value="<?php echo e($poolhall->latitude); ?>">
+                        </div>
+                     </div>
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="longitude" class="content-label"><?php echo e(trans('poolhall.longitude')); ?></label>
+                          <input type="text" name="longitude" class="form-control" value="<?php echo e($poolhall->longitude); ?>">
+                        </div>
+                     </div>
+                  </div>
 					
 				  <div class="form-group">
 						 <label for="price" class="content-label"><?php echo e(trans('poolhall.price')); ?></label>
@@ -115,7 +128,7 @@
 							<div class="form-group">
 							   <label for="phone_number" class="content-label"><?php echo e(trans('poolhall.phonenumber')); ?></label>
 							   <div class="row">
-								<div class="col-lg-3">
+								<div class="col-lg-5">
 									<select name="country_code" class="form-control" >
 										<option value=""><?php echo e(trans('poolhall.select_dial_code')); ?></option>
 										<?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -125,7 +138,7 @@
 										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 									  </select>
 							   </div>
-							   <div class="col-lg-9">
+							   <div class="col-lg-7">
 									<input type="text" class="form-control col-lg-6" name="phone_number" placeholder="<?php echo e(trans('poolhall.phonenumber')); ?>" value="<?php echo e($poolhall->phone_number); ?>">
 							   </div></div>
 							  
@@ -164,7 +177,7 @@
 						 <div class="col-lg-6">
 							<div class="form-group">
 								<label for="types_of_tables" class="content-label"><?php echo e(trans('poolhall.types_of_tables')); ?></label>
-								<input type="number" class="form-control" name="types_of_tables" placeholder="<?php echo e(trans('poolhall.types_of_tables')); ?>" value="<?php echo e($poolhall->types_of_tables); ?>">
+								<input type="text" class="form-control" name="types_of_tables" placeholder="<?php echo e(trans('poolhall.types_of_tables')); ?>" value="<?php echo e($poolhall->types_of_tables); ?>">
 							</div>
 						 </div>
 					</div>

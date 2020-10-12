@@ -10,6 +10,12 @@ use App\Models\TrainingSheet;
 class TrainingSheetController extends Controller
 {
     //
+	
+     /**
+     * Get Training sheet List
+     *
+     * @return [Json] Training sheet object
+     */
 	    public function sheets()
     {	
 		$TrainingSheet = TrainingSheet::all();

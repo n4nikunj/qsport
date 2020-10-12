@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PoolHall; 
 use Validator;
+
 class PoolHallController extends Controller
 {
     /**
@@ -24,6 +25,7 @@ class PoolHallController extends Controller
 		}
         return response()->json($poolhall);
     }
+
 	
 	/**
      * Create Pool Hall
@@ -41,9 +43,9 @@ class PoolHallController extends Controller
      * @return [integer] created_by
      */
 	
-	public function createPool(Request $request)
+
+	public function create(Request $request)
     {
-        
 		$rules= [
 			'title' => 'required',
 			'description' => 'required',
@@ -75,11 +77,13 @@ class PoolHallController extends Controller
         return response()->json([
             'message' => 'Successfully created Pool Hall!'
         ], 201);
+
 		
 		}
     }
-	public function updatePool(Request $request,$id)
+	public function update(Request $request,$id)
     {
+
         	$rules= [
 			'title' => 'required',
 			'description' => 'required',
@@ -91,25 +95,32 @@ class PoolHallController extends Controller
 			'phone_number' => 'required',
 			'start_time' => 'required',
 			'end_time' => 'required',
-			'created_by'=>'required'
+			'price' => 'required'
 		];
-		 $validator = Validator::make($request->all(),$rules);  
+		
+      $validator = Validator::make($request->all(),$rules);  
        if ($validator->fails()) {
 		 return response()->json([
             'message' => $validator->errors()
         ], 400);
         
 		}else{
-			
-        $data = $request->all();
-        $poolhall = PoolHall::find($id);
-        $poolhall->update($data);
-
-		
-        return response()->json([
-            'message' => 'Successfully updated Pool Hall!'
-        ], 201);
+			$data = $request->all();
+			$poolhall = PoolHall::find($id);
+			$poolhall->update($data);
+			return response()->json([
+				'message' => 'Successfully updated poolhall!'
+			], 201);
 		}
-		
+    }
+	public function detail($id)
+    {	
+		$tournament = Tournament::with('countries')->find($request->id);
+		if (!$tournament) {
+			return response()->json([
+				'message' => trans('tournament.empty')
+			], 404);
+		}
+        return response()->json($tournament);
     }
 }

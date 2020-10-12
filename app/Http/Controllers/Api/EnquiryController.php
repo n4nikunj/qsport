@@ -10,7 +10,7 @@ class EnquiryController extends Controller
 {
     //
 	/**
-     * Create Pool Hall
+     * Create Enquiry
      *
      * @param  [string] full_name
      * @param  [string] phone_no

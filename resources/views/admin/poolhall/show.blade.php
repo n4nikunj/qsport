@@ -63,7 +63,20 @@
 						</div>
                     @endforeach
                   </div>  
-				  
+				  <div class="row">
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="latitude" class="content-label">{{trans('poolhall.latitude')}}</label>
+                           <p>{{$poolhall->latitude}}</p>
+                        </div>
+                     </div>
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="longitude" class="content-label">{{trans('poolhall.longitude')}}</label>
+                          <p>{{$poolhall->longitude}}</p>
+                        </div>
+                     </div>
+                  </div>
 				  <div class="form-group">
 						 <label for="price" class="content-label">{{trans('poolhall.price')}}</label>
 						  <p>{{$poolhall->price}}</p>
@@ -72,13 +85,13 @@
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="start_time" class="content-label">{{trans('poolhall.start_time')}}</label>
-                           <p>{{$poolhall->start_time}}</p>
+                           <p>{{date('g:i a',strtotime($poolhall->start_time))}}</p>
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="end_time" class="content-label">{{trans('poolhall.end_time')}}</label>
-                          <p>{{$poolhall->end_time}}</p>
+                          <p>{{date('g:i a',strtotime($poolhall->end_time))}}</p>
                         </div>
                      </div>
                   </div>
@@ -128,7 +141,7 @@
 					</div>
 					<div class="form-group">
 						<label for="social_media_link" class="content-label">{{trans('poolhall.social_media_link')}}</label>
-						<p>{{$poolhall->social_media_link}}</p>
+						<p><a href="<?php echo $poolhall->social_media_link; ?>" target="_blank">{{$poolhall->social_media_link}}</a></p>
 					</div>
 					<div class="row">
 						 <div class="col-lg-6">

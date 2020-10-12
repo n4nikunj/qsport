@@ -22,7 +22,9 @@ class PoolHall extends Model implements HasMedia
      */
     protected $with = ['translations','countries','users'];
 	
-    protected $fillable = ['email','phone_number','country_code','country_id','social_media_link','number_of_tables','types_of_tables','price','start_time','end_time','status','created_by'];
+
+    protected $fillable = ['latitude','longitude','email','phone_number','country_code','country_id','social_media_link','number_of_tables','types_of_tables','price','start_time','end_time','status','created_by'];
+
 	/**
      * @var string
      */

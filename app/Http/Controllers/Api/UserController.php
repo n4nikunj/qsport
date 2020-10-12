@@ -30,7 +30,6 @@ class UserController extends Controller
 			'phone_number'=> 'required',
         ]);
 		
-		
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
@@ -46,6 +45,7 @@ class UserController extends Controller
     }
 	public function signupActivate($token)
 	{
+		
 		$user = User::where('activation_token', $token)->first();
 		if (!$user) {
 			return response()->json([

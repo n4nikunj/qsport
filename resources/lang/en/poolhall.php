@@ -55,5 +55,7 @@ return [
 	'createdOn' => 'Created On',
 	'pool_image' => 'Pool image',
 	'price' => 'Price',
-	'poolhall_image' => ' Pool Hall image',
+	'poolhall_image' => 'Pool Hall image',
+	'latitude' => 'Latitude',
+	'longitude' => 'Longitude'
 ];
