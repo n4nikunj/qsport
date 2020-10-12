@@ -25,6 +25,7 @@ Route::group([
     ], function() {
         Route::get('logout', 'UserController@logout');
         Route::get('user', 'UserController@user');
+		Route::put('updateUser','UserController@updateUser');
     });
 });
 //################# Password Reset API #########################
@@ -92,13 +93,29 @@ Route::group([
         Route::post('detail', 'TutroController@detail');
     });	
 
+//################# PoolHall API #########################
+ Route::group([
+      'middleware' => 'auth:api',
+	  'prefix' => 'poolhall','namespace' => 'Api'
+    ], function() {
+        Route::get('list', 'PoolHallController@list');
+        Route::put('updatePool/{id}', 'PoolHallController@updatePool');
+		Route::post('createPool', 'PoolHallController@createPool');
+    });
 
 
-/* Route::post('login', 'Api\UserController@login');
-Route::post('register', 'API\UserController@register');
-Route::get('list', 'Api\UserController@listdata');
-
-Route::group(['middleware' => 'auth:api'], function(){
-Route::post('details', 'API\UserController@details');
-}); */
-
+//################# Enquiry API #########################
+ Route::group([
+      'middleware' => 'auth:api',
+	  'prefix' => 'contact','namespace' => 'Api'
+    ], function() {
+		Route::post('enquiry', 'EnquiryController@createEnquiry');
+    });
+//################# TrainingOnline API #########################
+ Route::group([
+      'middleware' => 'auth:api',
+	  'prefix' => 'training','namespace' => 'Api'
+    ], function() {
+        Route::get('onlinelist', 'TrainingOnlineController@onlinelist');
+        Route::get('sheets', 'TrainingSheetController@sheets');
+    });

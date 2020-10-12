@@ -127,6 +127,7 @@ class PoolHallController extends Controller
 		'description:ar' => 'required|min:50|max:500',
 		'address:en' => 'required|min:50|max:500',
 		'address:ar' => 'required|min:50|max:500',
+
         'country_id' => 'required',
         'number_of_tables' => 'required|numeric',
         'types_of_tables' => 'required',
@@ -155,7 +156,7 @@ class PoolHallController extends Controller
 		$poolhall = PoolHall::create($data);
         
         if(isset($data['pool_image'])) {
-            //$poolhall->addMediaFromRequest('pool_image')->toMediaCollection('pool_image');
+            $poolhall->addMediaFromRequest('pool_image')->toMediaCollection('poolhall');
         }
 
 		if($poolhall) {

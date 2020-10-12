@@ -25,6 +25,7 @@ return [
     'show' => 'Show Training Online Session',
 
     //messages
+	'empty' => 'No Record',
     'added' => 'Training Online Session Added Successfully',
     'updated' => 'Training Online Session Updated Successfully',
     'deleted' => 'Training Online Session Deleted Successfully',
