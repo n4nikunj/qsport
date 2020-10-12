@@ -8,7 +8,8 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Notifications\SignupActivate;
 use Illuminate\Support\Str;
-
+use Validator;
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller 
 {
 	/**
@@ -119,4 +120,108 @@ class UserController extends Controller
     {
         return response()->json($request->user());
     }
+	
+	
+	/**
+     * update user
+     *
+     * @param  [string] name |required
+     * @param  [string] lastname
+     * @param  [string] email |required
+     * @param  [string] country_code | required
+     * @return [string] phone_number | required
+     * @return [string] user_bio 
+     * @return [string] current_password 
+     * @return [string] new_password | if current_password ~ required
+     * @return [string] new_confirm_password | if current_password ~ required
+     */
+	
+	
+	 public function updateUser(Request $request)
+    {
+      $data = $request->all();
+			
+		if(isset($data['current_password']))	
+		{
+			$rules= [
+			'name' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
+			'phone_number' => 'required',
+			'email' => 'required',
+			'current_password' => 'required',
+			'new_password' => 'required',
+			'new_confirm_password' => 'required|same:new_password',
+			];
+		}	
+		else{
+			$rules= [
+			'name' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
+			'email' => 'required',
+			'phone_number' => 'required'
+			];
+		}
+		 $validator = Validator::make($request->all(),$rules);  
+		
+		  if ($validator->fails()) {
+				 return response()->json([
+					'message' => $validator->errors()
+				], 400);
+			
+			}else{
+				
+				$user = User::where('email', $data['email'])->get();
+				$id =  $user[0]['id'];
+				if($user){
+					
+					if(isset($data['current_password']))
+					{
+						$updateData = array("name"=>$data['name'],
+											"lastname"=>$data['lastname'],
+											"country_code"=>$data['country_code'],
+											"phone_number"=>$data['phone_number'],
+											"user_bio"=>$data['user_bio'],
+											"password"=>Hash::make($data['new_password'])
+											);
+											
+										
+						 if ((Hash::check(request('current_password'), $user[0]['password']) == false)) {
+								 return response()->json([
+									'message' => 'Check your old password!'
+								], 400);
+							
+							} else if ((Hash::check(request('new_password'), Auth::user()->password)) == true) {
+								 return response()->json([
+									'message' => 'Please enter a password which is not similar then current password!'
+								], 400);
+								
+							} else {
+								User::where('id', $id)->update($updateData);
+								 return response()->json([
+										'message' => 'User data successfully updated!'
+									], 201);
+							}
+						
+					}
+					else{
+						$updateData = array("name"=>$data['name'],
+											"lastname"=>$data['lastname'],
+											"country_code"=>$data['country_code'],
+											"phone_number"=>$data['phone_number'],
+											"user_bio"=>$data['user_bio']
+											);
+											
+						User::where('id', $id)->update($updateData);
+						 return response()->json([
+												'message' => 'User data successfully updated!'
+											], 201);						
+					}
+					
+				}
+				else{
+					 return response()->json([
+					'message' => "User not found with our record"
+				], 400);
+				}
+				
+			}
+	}
 }

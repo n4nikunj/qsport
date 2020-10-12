@@ -121,7 +121,7 @@ class PoolHallController extends Controller
     {
 		
         $validator= $request->validate([
-        'title:en' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
+        'title:en' => 'required|max:100|min:5',
         'description:en' => 'required',
 		'address:en' => 'required',
         'country_id' => 'required',
@@ -139,7 +139,7 @@ class PoolHallController extends Controller
 		$poolhall = PoolHall::create($data);
         
         if(isset($data['pool_image'])) {
-            //$poolhall->addMediaFromRequest('pool_image')->toMediaCollection('pool_image');
+            $poolhall->addMediaFromRequest('pool_image')->toMediaCollection('poolhall');
         }
 
 		if($poolhall) {

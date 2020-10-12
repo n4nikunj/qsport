@@ -3,14 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\Models\Media;
 use App\Models\Country;
 use App\Models\User;
 use Astrotomic\Translatable\Translatable;
 use App\Models\Translations\PoolHallTranslation;
 
-class PoolHall extends Model
+class PoolHall extends Model implements HasMedia
 {
-	use  Translatable;
+	use  Translatable,HasMediaTrait;
     protected $table = 'pool_hall';
 	 /**
      * The relations to eager load on every query.
@@ -19,7 +22,7 @@ class PoolHall extends Model
      */
     protected $with = ['translations','countries','users'];
 	
-    protected $fillable = ['pool_image','email','phone_number','country_code','country_id','social_media_link','number_of_tables','types_of_tables','price','start_time','end_time','status','created_by'];
+    protected $fillable = ['email','phone_number','country_code','country_id','social_media_link','number_of_tables','types_of_tables','price','start_time','end_time','status','created_by'];
 	/**
      * @var string
      */
@@ -49,5 +52,11 @@ class PoolHall extends Model
 	public function users()
     {
          return $this->hasOne(User::class,'id','created_by');
+    }
+	public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')
+            ->width(500)
+            ->height(900);
     }
 }

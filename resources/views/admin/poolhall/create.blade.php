@@ -52,7 +52,7 @@
 						  <div role="tabpanel" class="tab-pane @if($lk=='en') active @endif" id="abc_{{$lk}}">
 								<div class="form-group">
 									 <label for="title:{{$lk}}" class="content-label">{{trans('poolhall.title')}}</label>
-									 <input type="text" class="form-control" name="title:{{$lk}}" placeholder="{{trans('poolhall.title')}}" value="">
+									 <input type="text" class="form-control" name="title:{{$lk}}" placeholder="{{trans('poolhall.title')}}" value="{{old('title:'.$lk)}}">
 								</div>
 								<div class="form-group">
 									<label for="description:{{$lk}}" class="content-label">{{trans('poolhall.description')}}</label>
@@ -69,19 +69,19 @@
 					
 				  <div class="form-group">
 						 <label for="price" class="content-label">{{trans('poolhall.price')}}</label>
-						  <input type="text" class="form-control" name="price" placeholder="{{trans('poolhall.price')}}" value="">
+						  <input type="text" class="form-control" name="price" placeholder="{{trans('poolhall.price')}}" value="{{old('price')}}">
 				  </div>
                   <div class="row">
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="start_time" class="content-label">{{trans('poolhall.start_time')}}</label>
-                           <input type="time" name="start_time" class="form-control" value="">
+                           <input type="time" name="start_time" class="form-control" value="{{old('start_time')}}">
                         </div>
                      </div>
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="end_time" class="content-label">{{trans('poolhall.end_time')}}</label>
-                          <input type="time" name="end_time" class="form-control" value="">
+                          <input type="time" name="end_time" class="form-control" value="{{old('end_time')}}">
                         </div>
                      </div>
                   </div>
@@ -105,7 +105,7 @@
 							<div class="form-group">
 							   <label for="email" class="content-label">{{trans('poolhall.email')}}</label>
 							  
-							   <input type="text" class="form-control" name="email" placeholder="{{trans('poolhall.email')}}" value="">
+							   <input type="text" class="form-control" name="email" placeholder="{{trans('poolhall.email')}}" value="{{old('email')}}">
 							</div>
 						 </div>
 						 <div class="col-lg-6">
@@ -123,7 +123,7 @@
 										  </select>
 								   </div>
 								   <div class="col-lg-9">
-										<input type="text" class="form-control col-lg-6" name="phone_number" placeholder="{{trans('poolhall.phonenumber')}}" value="">
+										<input type="text" class="form-control col-lg-6" name="phone_number" placeholder="{{trans('poolhall.phonenumber')}}" value="{{old('phone_number')}}">
 								   </div>
 							   </div>
 							  
@@ -150,19 +150,19 @@
 					</div>
 					<div class="form-group">
 						<label for="social_media_link" class="content-label">{{trans('poolhall.social_media_link')}}</label>
-						<input type="text" class="form-control" name="social_media_link" placeholder="{{trans('poolhall.social_media_link')}}" value="">
+						<input type="text" class="form-control" name="social_media_link" placeholder="{{trans('poolhall.social_media_link')}}" value="{{old('social_media_link')}}">
 					</div>
 					<div class="row">
 						 <div class="col-lg-6">
 							<div class="form-group">
 							  <label for="number_of_tables" class="content-label">{{trans('poolhall.number_of_tables')}}</label>
-								<input type="number" class="form-control" name="number_of_tables" placeholder="{{trans('poolhall.number_of_tables')}}" value="">
+								<input type="number" class="form-control" name="number_of_tables" placeholder="{{trans('poolhall.number_of_tables')}}" value="{{old('number_of_tables')}}">
 							</div>
 						 </div>
 						 <div class="col-lg-6">
 							<div class="form-group">
 								<label for="types_of_tables" class="content-label">{{trans('poolhall.types_of_tables')}}</label>
-								<input type="number" class="form-control" name="types_of_tables" placeholder="{{trans('poolhall.types_of_tables')}}" value="">
+								<input type="number" class="form-control" name="types_of_tables" placeholder="{{trans('poolhall.types_of_tables')}}" value="{{old('types_of_tables')}}">
 							</div>
 						 </div>
 					</div>

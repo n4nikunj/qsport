@@ -25,6 +25,7 @@ return [
     'show' => 'Show Training Sheet',
 
     //messages
+	'empty' => 'No Record',
     'added' => 'Training Sheet Added Successfully',
     'updated' => 'Training Sheet Updated Successfully',
     'deleted' => 'Training Sheet Deleted Successfully',
