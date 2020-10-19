@@ -20,7 +20,7 @@ class CreateWatchLiveMasterTable extends Migration
             $table->string('price');
             $table->string('currency');
             $table->string('online_link');
-            $table->enum('status',['active','inactive'])->default('active');
+            $table->enum('status',['Active','Inactive'])->default('active');
             $table->timestamps();
         });
         Schema::create('watch_live_translations', function(Blueprint $table){

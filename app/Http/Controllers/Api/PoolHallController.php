@@ -17,13 +17,14 @@ class PoolHallController extends Controller
 	
     public function list()
     {
-		$poolhall = PoolHall::where('status', 'active')->get();
+		$poolhall = PoolHall::select('id')->where('status', 'active')->get();
 		if (!$poolhall) {
 			return response()->json([
 				'message' => trans('poolhall.empty')
 			], 404);
 		}
         return response()->json($poolhall);
+		
     }
 
 	
@@ -47,6 +48,19 @@ class PoolHallController extends Controller
 	public function create(Request $request)
     {
 		$rules= [
+<<<<<<< HEAD
+			'title' => 'required|regex:/^[\pL\s\-]+$/u|min:5|max:100',
+			'description' => 'required|min:50|max:500',
+			'address' => 'required|min:50|max:500',
+			'country_id' => 'required',
+			'number_of_tables' => 'required|numeric',
+			'email' => 'required|email|min:5|max:100',
+			'country_code' => 'required',
+			'phone_number' => 'required|numeric|digits:10',
+			'start_time' => 'required',
+			'end_time' => 'required',
+			'price' => 'required|between:0,99.99'
+=======
 			'title' => 'required',
 			'description' => 'required',
 			'address' => 'required',
@@ -58,6 +72,7 @@ class PoolHallController extends Controller
 			'start_time' => 'required',
 			'end_time' => 'required',
 			'created_by'=>'required'
+>>>>>>> e247d7a53e0ddfc83c05086d09019c13cb684508
 		];
 		
       $validator = Validator::make($request->all(),$rules);  
@@ -81,6 +96,23 @@ class PoolHallController extends Controller
 		
 		}
     }
+<<<<<<< HEAD
+	// public function update(Request $request,$id)
+    // {
+		// $rules= [
+			// 'title' => 'required|regex:/^[\pL\s\-]+$/u|min:5|max:100',
+			// 'description' => 'required|min:50|max:500',
+			// 'address' => 'required|min:50|max:500',
+			// 'country_id' => 'required',
+			// 'number_of_tables' => 'required|numeric',
+			// 'email' => 'required|email|min:5|max:100',
+			// 'country_code' => 'required',
+			// 'phone_number' => 'required|numeric|digits:10',
+			// 'start_time' => 'required',
+			// 'end_time' => 'required',
+			// 'price' => 'required|between:0,99.99'
+		// ];
+=======
 	public function update(Request $request,$id)
     {
 
@@ -97,30 +129,32 @@ class PoolHallController extends Controller
 			'end_time' => 'required',
 			'price' => 'required'
 		];
+>>>>>>> e247d7a53e0ddfc83c05086d09019c13cb684508
 		
-      $validator = Validator::make($request->all(),$rules);  
-       if ($validator->fails()) {
-		 return response()->json([
-            'message' => $validator->errors()
-        ], 400);
+      // $validator = Validator::make($request->all(),$rules);  
+       // if ($validator->fails()) {
+		 // return response()->json([
+            // 'message' => $validator->errors()
+        // ], 400);
         
-		}else{
-			$data = $request->all();
-			$poolhall = PoolHall::find($id);
-			$poolhall->update($data);
-			return response()->json([
-				'message' => 'Successfully updated poolhall!'
-			], 201);
-		}
-    }
+		// }else{
+			// $data = $request->all();
+			// $poolhall = PoolHall::find($id);
+			// $poolhall->update($data);
+			// return response()->json([
+				// 'message' => 'Successfully updated poolhall!'
+			// ], 201);
+		// }
+    // }
 	public function detail($id)
     {	
-		$tournament = Tournament::with('countries')->find($request->id);
-		if (!$tournament) {
+		$poolhall = PoolHall::with('countries')->find($id);
+		if (!$poolhall) {
 			return response()->json([
-				'message' => trans('tournament.empty')
+				'message' => trans('poolhall.empty')
 			], 404);
 		}
-        return response()->json($tournament);
+        return response()->json($poolhall);
     }
+	
 }
