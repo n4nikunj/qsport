@@ -17,7 +17,7 @@ class WatchLive extends Model
      */
     protected $with = ['translations'];
 	
-    protected $fillable = ['match_image','start_date','end_date','price','currency','online_link','status'];
+    protected $fillable = ['end_date','price','currency','online_link','status'];
 	/**
      * @var string
      */

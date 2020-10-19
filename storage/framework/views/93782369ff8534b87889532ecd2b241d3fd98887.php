@@ -56,7 +56,7 @@
                  <tr>
                    <th><?php echo e(trans('common.id')); ?></th>
                   <th><?php echo e(trans('tournament.title')); ?></th>
-                  <!-- <th><?php echo e(trans('training_sheets.drill_instructions')); ?></th> -->
+                
                   <th><?php echo e(trans('tournament.venue')); ?></th>
                   <th><?php echo e(trans('tournament.hotel_name')); ?></th>
                   <th><?php echo e(trans('tournament.country')); ?></th>

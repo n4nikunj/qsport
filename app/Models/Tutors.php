@@ -19,7 +19,7 @@ class Tutors extends Model implements HasMedia
      */
     protected $with = ['translations'];
 	
-    protected $fillable = ['user_id', 'phoneno', 'email','country_id','address','currency','rate','lat','long','facebook','youtube','twitter','profile_status','status'];
+    protected $fillable = ['user_id','country_code','phoneno', 'email','country_id','address','currency','rate','lat','long','facebook','youtube','twitter','profile_status','status'];
 	/**
      * @var string
      */
