@@ -49,6 +49,8 @@ return [
 	'tutor' => 'Tutors',
 	'watchlive' => 'Watch Live',
 	'poolhall' => 'Pool Hall',
+	'gems' => 'Gems',
+	'diamonds_package' => 'Diamonds Package',
 
 	
 ];

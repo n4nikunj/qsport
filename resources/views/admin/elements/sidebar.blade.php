@@ -136,6 +136,22 @@ $routename = Route::currentRouteName();
           </a>
         </li>
         @endcan
+		<!-- Gems List -->
+		@can('gems-list')
+        <li class="{{ (request()->is('admin/gems')) ? 'active' : '' }}">
+          <a href="{{route('gems.index')}}">
+            <i class="fa fa fa-map"></i> <span>{{trans('admin.gems')}}</span>
+          </a>
+        </li>
+        @endcan
+		<!-- Diamonds Package List -->
+		@can('diamonds_package-list')
+        <li class="{{ (request()->is('admin/diamonds_package')) ? 'active' : '' }}">
+          <a href="{{route('diamonds_package.index')}}">
+            <i class="fa fa fa-map"></i> <span>{{trans('admin.diamonds_package')}}</span>
+          </a>
+        </li>
+        @endcan
 		<!-- Pool Hall List -->
 		@can('pool_hall-list')
         <li class="{{ (request()->is('admin/pool_hall')) ? 'active' : '' }}">

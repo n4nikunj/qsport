@@ -142,6 +142,22 @@ $routename = Route::currentRouteName();
           </a>
         </li>
         <?php endif; ?>
+		<!-- Gems List -->
+		<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('gems-list')): ?>
+        <li class="<?php echo e((request()->is('admin/gems')) ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('gems.index')); ?>">
+            <i class="fa fa fa-map"></i> <span><?php echo e(trans('admin.gems')); ?></span>
+          </a>
+        </li>
+        <?php endif; ?>
+		<!-- Diamonds Package List -->
+		<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('diamonds_package-list')): ?>
+        <li class="<?php echo e((request()->is('admin/diamonds_package')) ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('diamonds_package.index')); ?>">
+            <i class="fa fa fa-map"></i> <span><?php echo e(trans('admin.diamonds_package')); ?></span>
+          </a>
+        </li>
+        <?php endif; ?>
 		<!-- Pool Hall List -->
 		<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pool_hall-list')): ?>
         <li class="<?php echo e((request()->is('admin/pool_hall')) ? 'active' : ''); ?>">
