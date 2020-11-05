@@ -56,7 +56,7 @@
                  <tr>
                    <th>{{trans('common.id')}}</th>
                   <th>{{trans('tournament.title')}}</th>
-                  <!-- <th>{{trans('training_sheets.drill_instructions')}}</th> -->
+                
                   <th>{{trans('tournament.venue')}}</th>
                   <th>{{trans('tournament.hotel_name')}}</th>
                   <th>{{trans('tournament.country')}}</th>

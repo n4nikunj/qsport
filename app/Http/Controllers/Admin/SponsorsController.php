@@ -61,9 +61,13 @@ class SponsorsController extends Controller
         foreach ($empQuery as $emp) {
         # Set dynamic route for action buttons
 		
-		
-			$emp['logo'] = str_replace('http://localhost',url("/"),$emp->getMedia('sponsor_logo')->last()->getUrl('thumb'));
-            $emp['show']= route("sponsors.show",$emp["id"]);
+			if($emp->getMedia('sponsor_logo')->last()->getUrl('thumb')){
+				
+				$emp['logo'] = str_replace('http://localhost',url("/"),$emp->getMedia('sponsor_logo')->last()->getUrl('thumb'));
+            }else{
+				$emp['logo'] ="noimage.png";
+			}
+			$emp['show']= route("sponsors.show",$emp["id"]);
 			$emp['edit']= route("sponsors.edit",$emp["id"]);
             $emp['delete'] = route("sponsors.destroy",$emp["id"]);
             

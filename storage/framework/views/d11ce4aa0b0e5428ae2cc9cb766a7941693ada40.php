@@ -74,10 +74,10 @@
 							<?php echo e($country->dial_code); ?> 
 						  </option>    
 						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-					  </select>
+					</select>
 			   </div>
 			   <div class="col-lg-9">
-			   <input type="text" class="form-control col-lg-6" name="phoneno" placeholder="<?php echo e(trans('sponsors.phonenumber')); ?>" value="<?php echo e(old('phoneno')); ?>">
+			   <input type="text" class="form-control col-lg-6" name="phone_number" placeholder="<?php echo e(trans('sponsors.phonenumber')); ?>" value="<?php echo e(old('phoneno')); ?>">
 			   </div></div>
 			  
 			</div>		
@@ -94,7 +94,10 @@
 				</select>
 			  
 			</div>				
-			
+			 <div class="form-group">
+					 <label for="amountPaid" class="content-label"><?php echo e(trans('sponsors.amount_paid')); ?></label>
+					  <input type="text" class="form-control" name="amountPaid" placeholder="<?php echo e(trans('sponsors.amount_paid')); ?>" value="">
+			  </div>
             <div class="modal-footer">
               <button id="edit_btn" type="submit" class="btn btn-info btn-fill btn-wd"><?php echo e(trans('common.submit')); ?></button>
             </div>
