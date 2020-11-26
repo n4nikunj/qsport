@@ -23,14 +23,14 @@
               <div class="modal-body">
                 <div class="form-group">
                   <label for="content" class="content-label">{{trans('general_configuration.free_training_sheet')}}</label>
-                  <input class="form-control" placeholder="{{trans('general_configuration.free_training_sheet')}}" name="free_training_sheet" type="number"  value="{{$general_config['free_training_sheet']->value}}">
+                  <input class="form-control" placeholder="{{trans('general_configuration.free_training_sheet')}}" name="free_training_sheet" type="number"  value="{{isset($general_config['free_training_sheet']->value)?$general_config['free_training_sheet']->value:""}}">
                   @error('free_training_sheet')
                     <div class="help-block">{{ $message }}</div>
                   @enderror
                 </div> 
                 <div class="form-group">
                   <label for="content" class="content-label">{{trans('general_configuration.product_posting_price')}}</label>
-                  <input class="form-control" placeholder="{{trans('general_configuration.product_posting_price')}}" name="product_posting_price" type="number"  value="{{$general_config['product_posting_price']->value}}">
+                  <input class="form-control" placeholder="{{trans('general_configuration.product_posting_price')}}" name="product_posting_price" type="number"  value="{{isset($general_config['product_posting_price']->value)?$general_config['product_posting_price']->value:""}}">
                   @error('product_posting_price')
                     <div class="help-block">{{ $message }}</div>
                   @enderror

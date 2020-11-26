@@ -28,6 +28,7 @@ return [
 	'select_currency'=> 'Select Currency',
 
     //messages
+	'empty' => 'No Record',
     'added' => 'Tutor Added Successfully',
     'updated' => 'Tutor Updated Successfully',
     'deleted' => 'Tutor Deleted Successfully',

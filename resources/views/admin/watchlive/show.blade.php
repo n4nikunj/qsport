@@ -50,7 +50,7 @@
 						  <div role="tabpanel" class="tab-pane @if($lk=='en') active @endif" id="abc_{{$lk}}">
 								<div class="form-group">
 									 <label for="match_name:{{$lk}}" class="content-label">{{trans('watchlive.match_name')}}</label>
-									 <p>{{$watchlive->translate($lk)->match_name}}</p>
+									 <p>{{isset($watchlive->translate($lk)->match_name)?$watchlive->translate($lk)->match_name:""}}</p>
 								</div>
 							</div>
 						@endforeach

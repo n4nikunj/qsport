@@ -20,8 +20,11 @@ class WatchLiveController extends Controller
 		$watchlive = WatchLive::select('id','start_date','end_date','price')->where('status', 'active')->get();
 		if (!$watchlive) {
 			return response()->json([
-				'message' => trans('watchlive.empty')
-			], 404);
+				"success"=> "0",
+				"status"=> "200",
+				'message' => "No watchlive recored found",
+				"data"=>array()
+			], 200);
 		}
         return response()->json($watchlive);
 		
@@ -31,8 +34,10 @@ class WatchLiveController extends Controller
 		$watchlive = WatchLive::find($id);
 		if (!$watchlive) {
 			return response()->json([
+				"success"=> "0",
+				"status"=> "201",
 				'message' => trans('watchlive.empty')
-			], 404);
+			], 201);
 		}
         return response()->json($watchlive);
     }

@@ -11,6 +11,7 @@ return [
 
 	// otp expiry in minutes
 	'otp_expiry_in_minutes' => 15,
+	'imageurl'=>"http://cloud1.kodyinfotech.com:7000/qsport/public/"
 ];
 
 ?>

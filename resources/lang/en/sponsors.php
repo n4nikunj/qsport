@@ -29,10 +29,17 @@ return [
 
     //messages
     'added' => 'Sponsor Added Successfully',
+	'empty' => 'No Sponsor Found',
 	'updated' => 'Sponsor Updated Successfully',
     'deleted' => 'Sponsor Deleted Successfully',
 	'sponsor_status_update_sucessfully'  => 'Sponsor Status Update Successfully',
     'sponsor_status_update_unsucessfully'  => 'Sponsor Status Update UnSuccessfully',
+	
+	//api message
+	'dataFond'=>'Sponsor data got successfully',
+	'createSuccess'=>'Sponsor create successfully',
+	
+	
 	
 	//status
 	'active'=>'Active',

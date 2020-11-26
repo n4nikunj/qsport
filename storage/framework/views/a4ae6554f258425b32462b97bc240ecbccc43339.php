@@ -231,6 +231,13 @@ $routename = Route::currentRouteName();
           </a>
         </li> 
         <?php endif; ?>
+		 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('notification-list')): ?>
+        <li class="<?php echo e((request()->is('admin/notification') || request()->is('admin/notification/create') || request()->is('admin/notification/*')) ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('notification.index')); ?>">
+            <i class="fa fa-bell"></i> <span>Notification</span>
+          </a>
+        </li> 
+        <?php endif; ?>
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('setting-list')): ?>
         <li class="treeview <?php echo e((request()->is('admin/settings*')) ? 'active menu-open' : ''); ?>">
           <a href="#">
@@ -247,6 +254,15 @@ $routename = Route::currentRouteName();
 
               </a>
             </li>
+			 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('rate_management')): ?>
+            <li class="<?php echo e((request()->is('admin/settings/rate_management')) ? 'active' : ''); ?>">
+              <a href="<?php echo e(route('rate_management.index')); ?>">
+                  <i class="fa fa-arrow-right"></i>
+                  <?php echo e(trans('admin.rate_management')); ?>
+
+              </a>
+            </li>       
+            <?php endif; ?>
             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('general_config-list')): ?>
             <li class="<?php echo e((request()->is('admin/settings/general')) ? 'active' : ''); ?>">
               <a href="<?php echo e(route('general_config.index')); ?>">

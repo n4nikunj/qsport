@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\Models\Media;
 use App\Models\Country;
 use Astrotomic\Translatable\Translatable;
 use App\Models\Translations\TournamentTranslation;
-class Tournament extends Model
+class Tournament extends Model implements HasMedia
 {
-	use  Translatable;
+	use  Translatable, HasMediaTrait;
     protected $table = 'tournament';
 	 /**
      * The relations to eager load on every query.
@@ -49,5 +52,10 @@ class Tournament extends Model
     {
          return $this->hasOne(Country::class,'id','country_id');
     }
-
+	public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')
+            ->width(500)
+            ->height(900);
+    }
 }

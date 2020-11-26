@@ -49,6 +49,6 @@ return [
 	'tutor' => 'Tutors',
 	'watchlive' => 'Watch Live',
 	'poolhall' => 'Pool Hall',
-
+	'rate_management' =>'Rate Management'
 	
 ];

@@ -7,10 +7,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
+use Spatie\MediaLibrary\Models\Media;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Sponsors;
+
 class User extends Authenticatable implements HasMedia
 {
     use Notifiable, HasRoles, HasMediaTrait, HasApiTokens,SoftDeletes;
@@ -22,7 +24,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','phone_number','active', 'activation_token'
+        'name', 'lastname', 'email', 'password','country_code','phone_number','active', 'activation_token'
     ];
 
     /**
@@ -42,8 +44,16 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+	
 	 public function sponsors()
 	  {
 		return $this->belongsTo(Sponsors::class, 'user_id');
 	  }	
+	  
+	 public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')
+            ->width(500)
+            ->height(900);
+    } 
 }

@@ -18,7 +18,9 @@ Route::get('/', function () {
 Route::prefix('admin')->group( function() {
 	Auth::routes();
 });
-
+Route::get('/reset-password/{token}', function ($token) {
+    return view('auth.reset-password', ['token' => $token]);
+})->middleware(['guest'])->name('password.reset');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin','namespace' => 'Admin' ], function() {
@@ -37,7 +39,14 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 		//setting
 		Route::get('settings', 'SettingController@index')->name('settings.index');
 		Route::post('settings/update', 'SettingController@update')->name('settings.update');
+		
+		//Rate Management
+			Route::get('rate_management', 'RateManagementController@index')->name('rate_management.index');
+		Route::post('rate_management/update', 'RateManagementController@update')->name('rate_management.update');
+		
+		
 		//products
+
 		Route::resource('products','ProductController');
 
 		//countries
@@ -49,6 +58,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 		Route::resource('cms', 'CmsController');
 		Route::post('/cms/ajax', 'CmsController@index_ajax')->name('dt_cms');
 		Route::post('/cms/status', 'CmsController@status')->name('cms_status');
+		Route::get('/cms/page/{pageName}', 'CmsController@pageName');
 		
 		//enquiry
 		Route::resource('/enquiry', 'EnquiryController');
@@ -58,10 +68,13 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 		//general configuration
 		Route::get('settings/general', 'GeneralConfigurationController@index')->name('general_config.index');
 		Route::post('general/update', 'GeneralConfigurationController@update')->name('general_configuration.update');
-
+		
 		//categories
 		Route::resource('categories','CategoryController');
-
+	//Notification
+		Route::resource('notification','NotificationController');
+		Route::post('/notification/ajax', 'NotificationController@index_ajax')->name('ajax_notification');
+		Route::post('/notification/status', 'NotificationController@status')->name('notification_status');
 		//training sheets
 		Route::resource('training_sheets','TrainingSheetController');
 		
@@ -111,8 +124,12 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 
 		//general configuration
 		Route::get('settings/gems', 'GemsConfigController@index')->name('gems_config.index');
+		
 		Route::post('gems/update', 'GemsConfigController@update')->name('gems_config.update');
 		Route::delete('settings/gems/delete/{id}', 'GemsConfigController@destroy')->name('gems_config.destroy');
+		
+		
+		
 		
     });
 });

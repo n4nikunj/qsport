@@ -52,11 +52,11 @@
                       <div role="tabpanel" class="tab-pane <?php if($lk=='en'): ?> active <?php endif; ?>" id="abc_<?php echo e($lk); ?>">
 						  <div class="form-group">
 							  <label for="title:<?php echo e($lk); ?>" class="content-label"><?php echo e(trans('tutor.title')); ?></label>
-							 <p><?php echo e($tutor->translate($lk)->name); ?></p>
+							 <p><?php echo e((isset($tutor->translate($lk)->name))?$tutor->translate($lk)->name:""); ?></p>
 						  </div>
 						  <div class="form-group">
 							 <label for="description:<?php echo e($lk); ?>" class="content-label"><?php echo e(trans('tutor.description')); ?></label>
-							 <p><?php echo e($tutor->translate($lk)->description); ?></p>
+							 <p><?php echo e((isset($tutor->translate($lk)->description))?$tutor->translate($lk)->description:""); ?></p>
 						  </div>
 						</div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

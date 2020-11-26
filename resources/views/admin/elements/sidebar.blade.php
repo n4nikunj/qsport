@@ -223,6 +223,13 @@ $routename = Route::currentRouteName();
           </a>
         </li> 
         @endcan
+		 @can('notification-list')
+        <li class="{{ (request()->is('admin/notification') || request()->is('admin/notification/create') || request()->is('admin/notification/*')) ? 'active' : '' }}">
+          <a href="{{route('notification.index')}}">
+            <i class="fa fa-bell"></i> <span>Notification</span>
+          </a>
+        </li> 
+        @endcan
         @can('setting-list')
         <li class="treeview {{ (request()->is('admin/settings*')) ? 'active menu-open' : '' }}">
           <a href="#">
@@ -238,6 +245,14 @@ $routename = Route::currentRouteName();
                   {{trans('admin.site_settings')}}
               </a>
             </li>
+			 @can('rate_management')
+            <li class="{{ (request()->is('admin/settings/rate_management')) ? 'active' : '' }}">
+              <a href="{{route('rate_management.index')}}">
+                  <i class="fa fa-arrow-right"></i>
+                  {{trans('admin.rate_management')}}
+              </a>
+            </li>       
+            @endcan
             @can('general_config-list')
             <li class="{{ (request()->is('admin/settings/general')) ? 'active' : '' }}">
               <a href="{{route('general_config.index')}}">

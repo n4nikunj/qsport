@@ -15,7 +15,7 @@ class UpdateUsersDetailTable extends Migration
     {
        Schema::table('users', function($table) {
             $table->string('lastname')->after('name')->nullable();
-			 $table->string('country_code')->after('email');
+			 $table->string('country_code')->after('email')->nullable();
             $table->string('user_bio',100)->after('user_type')->nullable();
         });
     }

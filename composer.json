@@ -17,7 +17,8 @@
         "laravel/ui": "^1.2",
         "laravelcollective/html": "^6.0",
         "spatie/laravel-medialibrary": "^7.18",
-        "spatie/laravel-permission": "^3.8"
+        "spatie/laravel-permission": "^3.8",
+        "twilio/sdk": "^6.13"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

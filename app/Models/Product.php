@@ -12,7 +12,7 @@ class Product extends Model implements HasMedia
 	use HasMediaTrait;
 
     protected $fillable = [
-        'name', 'description', 'rate', 'currency', 'user_id', 'category_id'
+        'name', 'description', 'rate', 'currency', 'user_id', 'category_id','country','location','country_code','phoneNumber'
     ];
 
     public function registerMediaConversions(Media $media = null)

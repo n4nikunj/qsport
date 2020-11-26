@@ -53,15 +53,15 @@
 						  <div role="tabpanel" class="tab-pane @if($lk=='en') active @endif" id="abc_{{$lk}}">
 								<div class="form-group">
 									 <label for="title:{{$lk}}" class="content-label">{{trans('poolhall.title')}}</label>
-									 <input type="text" class="form-control" name="title:{{$lk}}" placeholder="{{trans('poolhall.title')}}" value="{{$poolhall->translate($lk)->title}}">
+									 <input type="text" class="form-control" name="title:{{$lk}}" placeholder="{{trans('poolhall.title')}}" value="{{isset($poolhall->translate($lk)->title)?$poolhall->translate($lk)->title:""}}">
 								</div>
 								<div class="form-group">
 									<label for="description:{{$lk}}" class="content-label">{{trans('poolhall.description')}}</label>
-									<textarea class="form-control" minlength="2" maxlength="255"  name="description:{{$lk}}">{{$poolhall->translate($lk)->description}}</textarea>
+									<textarea class="form-control" minlength="2" maxlength="255"  name="description:{{$lk}}">{{isset($poolhall->translate($lk)->description)?$poolhall->translate($lk)->description:""}}</textarea>
 								</div>
 								<div class="form-group">
 										<label for="address:{{$lk}}" class="content-label">{{trans('poolhall.address')}}</label>
-										<textarea class="form-control" minlength="2" maxlength="255"  name="address:{{$lk}}">{{$poolhall->translate($lk)->address}}</textarea>
+										<textarea class="form-control" minlength="2" maxlength="255"  name="address:{{$lk}}">{{isset($poolhall->translate($lk)->address)?$poolhall->translate($lk)->address:""}}</textarea>
 								</div>
 							</div>
 						@endforeach

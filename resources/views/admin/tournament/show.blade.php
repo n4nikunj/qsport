@@ -50,11 +50,11 @@
                       <div role="tabpanel" class="tab-pane @if($lk=='en') active @endif" id="abc_{{$lk}}">
 						  <div class="form-group">
 							  <label for="title:{{$lk}}" class="content-label">{{trans('tournament.title')}}</label>
-							 <p>{{$tournament->translate($lk)->title}}</p>
+							 <p>{{isset($tournament->translate($lk)->title)?$tournament->translate($lk)->title:""}}</p>
 						  </div>
 						  <div class="form-group">
 							 <label for="description:{{$lk}}" class="content-label">{{trans('tournament.description')}}</label>
-							 <p>{{$tournament->translate($lk)->description}}</p>
+							 <p>{{isset($tournament->translate($lk)->description)?$tournament->translate($lk)->description:""}}</p>
 						  </div>
 						</div>
                     @endforeach

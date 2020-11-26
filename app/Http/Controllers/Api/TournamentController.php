@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tournament;
 use Validator;
+use App\Helpers\CommonHelpers;
+
 class TournamentController extends Controller
 {
      /**
@@ -16,15 +18,35 @@ class TournamentController extends Controller
 	
        public function list()
     {	
-		$tournament = Tournament::withTranslation()->select('id','country_id','start_date','end_date')->with('countries') ->whereHas('countries', function($query) {
+		$tournament = Tournament::withTranslation()->select('id','country_id','status','start_date','end_date')->with('countries')->whereHas('countries', function($query) {
                 $query->select('country_name');
-            })->get();
-		if (!$tournament) {
+            })->whereIn("status",['Announced','Running'])->orderBy('id', 'DESC')->get();
+		if (count($tournament) == 0) {
 			return response()->json([
-				'message' => trans('tournament.empty')
-			], 404);
+				"success"=> "0",
+				"status"=> "200",
+				'message' => trans('tournament.empty'),
+				"data"=>array()
+			], 200);
 		}
-        return response()->json($tournament);
+	
+		$data = array();
+		 foreach ($tournament as $val) {
+			 $result['id'] = ($val["id"] == null)? "" : (string)$val["id"];
+			 $result['country_code'] = ($val["countries"]["country_code"] == null)? "" : $val["countries"]["country_code"];
+			 $result['start_date'] = ($val["start_date"] == null)? "" : $val["start_date"];
+			 $result['end_date'] = ($val["end_date"] == null)? "" : $val["end_date"];
+			 $result['title'] = ($val["title"] == null)? "" : $val["title"];
+			 $result['status'] = ($val["status"] == null)? "" : $val["status"];
+			 $result['countryFlag'] =config('adminlte.imageurl')."/img/country/".strtolower($val["countries"]["country_code"]).".png";
+			 $data[] = $result;
+		 }
+		
+        return response()->json([
+			"success"=> "1",
+			"status"=> "200",
+			"message"=> "Tournament list got successfully",
+			"data"=>$data],200);
     }
 	
      /**
@@ -37,12 +59,46 @@ class TournamentController extends Controller
      public function detail(Request $request)
     {	
 		$tournament = Tournament::with('countries')->find($request->id);
+		
 		if (!$tournament) {
 			return response()->json([
-				'message' => trans('tournament.empty')
-			], 404);
+				"success"=> "0",
+				"status"=> "200",
+				'message' => trans('tournament.empty'),
+				"data"=>array()
+			], 200);
 		}
-        return response()->json($tournament);
+			
+			
+			$userdata = Tournament::where('id', $request->id)->get();
+			$imgurl = $thumburl = "";
+			if(count($tournament->getMedia('tournament_image')) >0){
+				$imgurl = $userdata[0]->getMedia('tournament_image')->last()->getUrl();
+				$thumburl =$userdata[0]->getMedia('tournament_image')->last()->getUrl('thumb');
+			}
+			 $result['id'] = ($tournament->id == null)? "" : (string)$tournament->id;
+			 $result['title'] = ($tournament->title == null)? "" : $tournament->title;
+			 $result['start_date'] = ($tournament->start_date == null)? "" : $tournament->start_date;
+			 $result['end_date'] = ($tournament->end_date == null)? "" : $tournament->end_date;
+			 $result['maximum_Player'] = ($tournament->maximum_Player == null)? "" : (string)$tournament->maximum_Player;
+			 $result['venue'] = ($tournament->venue == null)? "" : $tournament->venue;
+			 $result['email'] = ($tournament->email == null)? "" : $tournament->email;
+			 $result['hotel_name'] = ($tournament->hotel_name == null)? "" : $tournament->hotel_name;
+			 $result['country_code'] = ($tournament->country_code == null)? "" : $tournament->country_code;
+			 $result['phone_number'] = ($tournament->phone_number == null)? "" : $tournament->phone_number;
+			 $result['description'] = ($tournament->description == null)? "" : $tournament->description;
+			 $result['currency'] = ($tournament->currency == null)? "" : $tournament->currency;
+			 $result['entry_fee'] = ($tournament->entry_fee == null)? "" : $tournament->entry_fee;
+			 $result['priceMoney'] = ($tournament->priceMoney == null)? "" : $tournament->priceMoney;
+			 $result['tornamentImage'] = CommonHelpers::getUrl($imgurl);
+			 
+			 $result['countryFlag'] = config('adminlte.imageurl')."/img/country/".strtolower($tournament["countries"]->country_code).".png";
+			 $data[] = $result;
+        return response()->json([
+			"success"=> "1",
+			"status"=> "200",
+			"message"=> "Tournament detail got successfully",
+			"data"=>$result],200);
     }
 	/**
      * Tournament create 
@@ -74,7 +130,7 @@ class TournamentController extends Controller
         
         
 		$rules= [
-        'title' => 'required|regex:/^[\pL\s\-]+$/u|max:30',
+        'title' => 'required',
         'description' => 'required',
         'country_id' => 'required',
         'venue' => 'required',
@@ -84,24 +140,44 @@ class TournamentController extends Controller
         'maximum_Player' => 'required',
         'start_date' => 'required',
         'end_date' => 'required',
-        'entry_fee' => 'required',
-        'priceMoney' => 'required',
-        'amountPaid' => 'required',
+        'entry_fee' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+        'priceMoney' => 'required|regex:/^\d+(\.\d{1,2})?$/'
 		];
-		
-      $validator = Validator::make($request->all(),$rules);  
+		 $customMessages = [
+        'regex' => 'Please enter valid amount for :attribute'
+		];
+      $validator = Validator::make($request->all(),$rules,$customMessages);  
        if ($validator->fails()) {
 		 return response()->json([
+			"success"=> "0",
+			"status"=> "201",
             'message' => $validator->errors()
-        ], 400);
+        ], 201);
         
 		}else{
 			$data = $request->all();
+			$user = $request->user();
+			
+			 
+			$data['created_at'] =date("Y-m-d");
+			$data['updated_at'] = date("Y-m-d");
+			$data['created_by'] = $user->id;
+			$data['watch_live'] ="No";
+			$data['status'] = "Announced";
+			$data['amountPaid']="0";
+			
 			$tournament = Tournament::create($data);
+			
 			$tournament->save();
+			
+			if(isset($data['tornamentImage'])) {
+				$tournament->addMediaFromRequest('tornamentImage')->toMediaCollection('tournament_image');
+			}
 			return response()->json([
+				"success"=> "1",
+				"status"=> "200",	
 				'message' => 'Successfully created tournament!'
-			], 201);
+			], 200);
 		}
     }
 	

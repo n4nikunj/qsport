@@ -54,11 +54,11 @@
                       <div role="tabpanel" class="tab-pane @if($lk=='en') active @endif" id="abc_{{$lk}}">
                         <div class="form-group">
                           <label for="title:{{$lk}}" class="content-label">{{trans('tutor.title')}}</label>
-                          <input class="form-control" minlength="2" maxlength="100" placeholder="{{trans('tutor.title')}}" name="name:{{$lk}}" type="text" value="{{$tutor->translate($lk)->name}}">
+                          <input class="form-control" minlength="2" maxlength="100" placeholder="{{trans('tutor.title')}}" name="name:{{$lk}}" type="text" value="{{isset($tutor->translate($lk)->name)?$tutor->translate($lk)->name:""}}">
                         </div>
                         <div class="form-group">
                           <label for="description:{{$lk}}" class="content-label">{{trans('tutor.description')}}</label>
-                          <textarea class="form-control" minlength="2" maxlength="500"  name="description:{{$lk}}">{{$tutor->translate($lk)->description}}</textarea>
+                          <textarea class="form-control" minlength="2" maxlength="500"  name="description:{{$lk}}">{{isset($tutor->translate($lk)->description)?$tutor->translate($lk)->description:""}}</textarea>
                         </div>
                       </div>
                     @endforeach

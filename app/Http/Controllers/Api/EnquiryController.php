@@ -33,8 +33,10 @@ class EnquiryController extends Controller
       $validator = Validator::make($request->all(),$rules);  
        if ($validator->fails()) {
 		 return response()->json([
+			"success"=> "0",
+				"status"=> "201",
             'message' => $validator->errors()
-        ], 400);
+        ], 201);
         
 		}else{
 			
@@ -45,8 +47,10 @@ class EnquiryController extends Controller
 		$Enquiry = Enquiry::create($data);
 		
         return response()->json([
+			"success"=> "1",
+			"status"=> "200",
             'message' => 'Successfully created Enquiry!'
-        ], 201);
+        ], 200);
 		
 		}
     }

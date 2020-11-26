@@ -219,5 +219,18 @@ class CmsController extends Controller
         return response()->json(['error' => trans('cms.cms_status_update_unsucess')]);
        }
     }
+	    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function pageName($pageName)
+    {
+       
+        $cms = Cms::where('slug',$pageName)->get();
+		
+        return view('admin.cms.page',compact('cms'));
+    }
 }
    
