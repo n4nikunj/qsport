@@ -49,6 +49,12 @@ return [
 	'tutor' => 'Tutors',
 	'watchlive' => 'Watch Live',
 	'poolhall' => 'Pool Hall',
+
 	'rate_management' =>'Rate Management'
+
+	'gems' => 'Gems',
+	'diamonds_package' => 'Diamonds Package',
+
+
 	
 ];

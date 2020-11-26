@@ -83,7 +83,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 		Route::post('/pool_hall/ajax', 'PoolHallController@index_ajax')->name('ajax_pool_hall');
 		Route::post('/pool_hall/status', 'PoolHallController@status')->name('pool_hall_status');
 		
-		//Pool Hall
+		//Watch Live
 		Route::resource('watch_live','WatchLiveController');
 		Route::post('/watch_live/ajax', 'WatchLiveController@index_ajax')->name('ajax_watch_live');
 		Route::post('/watch_live/status', 'WatchLiveController@status')->name('watch_live_status');
@@ -97,6 +97,14 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function () {
 		Route::resource('sponsors','SponsorsController');
 		Route::post('/sponsors/ajax', 'SponsorsController@index_ajax')->name('ajax_sponsor');
 		Route::post('/sponsors/status', 'SponsorsController@status')->name('sponsors_status');
+		
+		//Diamonds Package
+		Route::resource('diamonds_package','DiamondsPackageController');
+		Route::post('/diamonds_package/ajax', 'DiamondsPackageController@index_ajax')->name('ajax_diamonds_package');
+		
+		//Gems
+		Route::resource('gems','GemsController');
+		Route::post('/gems/ajax', 'GemsController@index_ajax')->name('ajax_gems');
 		
 		//tutor
 		Route::resource('tutors','TutorsController');
